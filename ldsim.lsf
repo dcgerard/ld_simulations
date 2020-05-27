@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#BSUB -J ldsim
+#BSUB -q normal
+#BSUB -o ldsim_out.txt
+#BSUB -e ldsim_err.txt
+#BSUB n=12
+make all
