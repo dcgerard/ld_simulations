@@ -24,28 +24,58 @@ If you find a bug, please create an
 [issue](https://github.com/dcgerard/reproduce_pairwise_ld/issues).
 
 ## Instructions
+
+You'll need to have up-to-date versions of R and python3 to run these simulatoins.
     
 1. Install the appropriate R packages
     ```{r, eval = FALSE}
-    install.packages(c("updog",
-                       "tidyverse", 
+    install.packages(c("tidyverse", 
                        "Rcpp",
                        "RcppArmadillo",
-                       "roptim",
                        "foreach",
                        "doParallel",
                        "devtools"))
+    devtools::install_github("dcgerard/updog")
     devtools::install_github("dcgerard/ldsep")
-    devtools::install_github("tpbilton/GUSbase")
-    devtools::install_github("AgResearch/GUS-LD")
+    ```
+    
+2. Install ngsLD in the working directory of the simulation files: <https://github.com/fgvieira/ngsLD>
+    
+    ```bash
+    git clone https://github.com/fgvieira/ngsLD.git
+	  cd ngsLD
+	  make
     ```
 
-6. Get coffee. Running `make sims` should take a few hours. You should get 
+3. Install msprime: <https://msprime.readthedocs.io/en/stable/installation.html>
+  
+    I did this via pip:
+    
+    ```bash
+    pip3 install msprime
+    ```
+    
+    Make sure that you have added `~/.local/bin` to the `PATH` by adding the
+    following to your `.bashrc` file:
+    
+    ```bash
+    export PATH=$PATH:~/.local/bin
+    ```
+
+4. Run `make`. This will run all of the simulations.
+
+  ```bash
+  make
+  ```
+  
+  You may choose to run only part of hte simulations `make mle` or `make ngsLD`.
+
+5. Get coffee/sweets. Running `make sims` should take a few hours. You should get 
    some coffee! Here is a list of some of my favorite places:
 
     - Washington, DC
         - [Colony Club](https://www.yelp.com/biz/colony-club-washington)
-        - [Grace Street Coffee](https://www.yelp.com/biz/grace-street-coffee-georgetown)
+        - [Three Fifty](https://www.yelp.com/biz/three-fifty-bakery-and-coffee-bar-washington) (for the baked goods, coffee is meh)
     - Chicago
         - [Sawada Coffee](https://www.yelp.com/biz/sawada-coffee-chicago)
         - [Plein Air Cafe](https://www.yelp.com/biz/plein-air-cafe-and-eatery-chicago-2)

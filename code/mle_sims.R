@@ -73,8 +73,12 @@ stopifnot(paramdf$pAB > 0, paramdf$pAB < 1,
 paramdf %>%
   mutate(mle_D_est   = NA_real_,
          mle_D_se    = NA_real_,
+         mle_Dprime_est = NA_real_,
+         mle_Dprime_se = NA_real_,
          mle_r2_est  = NA_real_,
          mle_r2_se   = NA_real_,
+         mle_r_est   = NA_real_,
+         mle_r_se    = NA_real_,
          mle_z_est   = NA_real_,
          mle_z_se    = NA_real_,
          mle_pab_est = NA_real_,
@@ -84,10 +88,14 @@ paramdf %>%
          mle_time    = NA_real_,
          gen_D_est   = NA_real_,
          gen_D_se    = NA_real_,
+         gen_Dprime_est = NA_real_,
+         gen_Dprime_se = NA_real_,
          gen_r2_est  = NA_real_,
          gen_r2_se   = NA_real_,
          gen_z_est   = NA_real_,
          gen_z_se    = NA_real_,
+         gen_r_est   = NA_real_,
+         gen_r_se    = NA_real_,
          gen_pab_est = NA_real_,
          gen_pAb_est = NA_real_,
          gen_paB_est = NA_real_,
@@ -95,15 +103,37 @@ paramdf %>%
          gen_time    = NA_real_,
          mom_D_est   = NA_real_,
          mom_D_se    = NA_real_,
+         mom_Dprime_est = NA_real_,
+         mom_Dprime_se = NA_real_,
          mom_r2_est  = NA_real_,
          mom_r2_se   = NA_real_,
          mom_z_est   = NA_real_,
          mom_z_se    = NA_real_,
-         mom_pab_est = NA_real_,
-         mom_pAb_est = NA_real_,
-         mom_paB_est = NA_real_,
-         mom_pAB_est = NA_real_,
-         mom_time    = NA_real_) ->
+         mom_r_est   = NA_real_,
+         mom_r_se    = NA_real_,
+         mom_time    = NA_real_,
+         com_D_est   = NA_real_,
+         com_D_se    = NA_real_,
+         com_Dprime_est = NA_real_,
+         com_Dprime_se = NA_real_,
+         com_r2_est  = NA_real_,
+         com_r2_se   = NA_real_,
+         com_z_est   = NA_real_,
+         com_z_se    = NA_real_,
+         com_r_est   = NA_real_,
+         com_r_se    = NA_real_,
+         com_time    = NA_real_,
+         com_nopen_D_est   = NA_real_,
+         com_nopen_D_se    = NA_real_,
+         com_nopen_Dprime_est = NA_real_,
+         com_nopen_Dprime_se = NA_real_,
+         com_nopen_r2_est  = NA_real_,
+         com_nopen_r2_se   = NA_real_,
+         com_nopen_z_est   = NA_real_,
+         com_nopen_z_se    = NA_real_,
+         com_nopen_r_est   = NA_real_,
+         com_nopen_r_se    = NA_real_,
+         com_nopen_time    = NA_real_) ->
   paramdf
 
 ## shuffle order to equalize computation time across nodes
@@ -125,7 +155,6 @@ i <- 1
 simdf <- foreach::foreach(i = seq_len(nrow(paramdf)),
                           .combine = rbind,
                           .export = c("ldest",
-                                      "ldsimp",
                                       "rflexdog",
                                       "flexdog")) %dopar% {
                             set.seed(paramdf$seed[[i]])
@@ -183,15 +212,20 @@ simdf <- foreach::foreach(i = seq_len(nrow(paramdf)),
                               paramdf$mle_time[[i]] <- system.time(
                                 ldmle <- ldsep::ldest(ga = foutA$genologlike,
                                                       gb = foutB$genologlike,
-                                                      K = paramdf$ploidy[[i]])
+                                                      K = paramdf$ploidy[[i]],
+                                                      type = "hap")
                               )[[3]]
 
                               paramdf$mle_D_est[[i]]   <- ldmle[["D"]]
                               paramdf$mle_D_se[[i]]    <- ldmle[["D_se"]]
+                              paramdf$mle_Dprime_est[[i]] <- ldmle[["Dprime"]]
+                              paramdf$mle_Dprime_se[[i]]  <- ldmle[["Dprime_se"]]
                               paramdf$mle_r2_est[[i]]  <- ldmle[["r2"]]
                               paramdf$mle_r2_se[[i]]   <- ldmle[["r2_se"]]
                               paramdf$mle_z_est[[i]]   <- ldmle[["z"]]
                               paramdf$mle_z_se[[i]]    <- ldmle[["z_se"]]
+                              paramdf$mle_r_est[[i]]   <- ldmle[["r"]]
+                              paramdf$mle_r_se[[i]]    <- ldmle[["r_se"]]
                               paramdf$mle_pab_est[[i]] <- ldmle[["p_ab"]]
                               paramdf$mle_pAb_est[[i]] <- ldmle[["p_Ab"]]
                               paramdf$mle_paB_est[[i]] <- ldmle[["p_aB"]]
@@ -202,15 +236,20 @@ simdf <- foreach::foreach(i = seq_len(nrow(paramdf)),
                               paramdf$gen_time[[i]] <- system.time(
                                 ldgen <- ldsep::ldest(ga = foutA$geno,
                                                       gb = foutB$geno,
-                                                      K = paramdf$ploidy[[i]])
+                                                      K = paramdf$ploidy[[i]],
+                                                      type = "hap")
                               )[[3]]
 
                               paramdf$gen_D_est[[i]]   <- ldgen[["D"]]
                               paramdf$gen_D_se[[i]]    <- ldgen[["D_se"]]
+                              paramdf$gen_Dprime_est[[i]] <- ldgen[["Dprime"]]
+                              paramdf$gen_Dprime_se[[i]]  <- ldgen[["Dprime_se"]]
                               paramdf$gen_r2_est[[i]]  <- ldgen[["r2"]]
                               paramdf$gen_r2_se[[i]]   <- ldgen[["r2_se"]]
                               paramdf$gen_z_est[[i]]   <- ldgen[["z"]]
                               paramdf$gen_z_se[[i]]    <- ldgen[["z_se"]]
+                              paramdf$gen_r_est[[i]]   <- ldgen[["r"]]
+                              paramdf$gen_r_se[[i]]    <- ldgen[["r_se"]]
                               paramdf$gen_pab_est[[i]] <- ldgen[["p_ab"]]
                               paramdf$gen_pAb_est[[i]] <- ldgen[["p_Ab"]]
                               paramdf$gen_paB_est[[i]] <- ldgen[["p_aB"]]
@@ -219,21 +258,66 @@ simdf <- foreach::foreach(i = seq_len(nrow(paramdf)),
 
                             tryCatch({
                               paramdf$mom_time[[i]] <- system.time(
-                                ldmom <- ldsep::ldsimp(ga = foutA$postmean,
-                                                       gb = foutB$postmean,
-                                                       K = paramdf$ploidy[[i]])
+                                ldmom <- ldsep::ldest(ga = foutA$postmean,
+                                                      gb = foutB$postmean,
+                                                      K = paramdf$ploidy[[i]],
+                                                      type = "comp")
                               )[[3]]
 
                               paramdf$mom_D_est[[i]]   <- ldmom[["D"]]
                               paramdf$mom_D_se[[i]]    <- ldmom[["D_se"]]
+                              paramdf$mom_Dprime_est[[i]] <- ldmom[["Dprime"]]
+                              paramdf$mom_Dprime_se[[i]]  <- ldmom[["Dprime_se"]]
                               paramdf$mom_r2_est[[i]]  <- ldmom[["r2"]]
                               paramdf$mom_r2_se[[i]]   <- ldmom[["r2_se"]]
                               paramdf$mom_z_est[[i]]   <- ldmom[["z"]]
                               paramdf$mom_z_se[[i]]    <- ldmom[["z_se"]]
-                              paramdf$mom_pab_est[[i]] <- ldmom[["p_ab"]]
-                              paramdf$mom_pAb_est[[i]] <- ldmom[["p_Ab"]]
-                              paramdf$mom_paB_est[[i]] <- ldmom[["p_aB"]]
-                              paramdf$mom_pAB_est[[i]] <- ldmom[["p_AB"]]
+                              paramdf$mom_r_est[[i]]   <- ldmom[["r"]]
+                              paramdf$mom_r_se[[i]]    <- ldmom[["r_se"]]
+                            }, error = function(e) NULL)
+
+                            tryCatch({
+                              paramdf$com_time[[i]] <- system.time(
+                                ldcom <- ldsep::ldest(ga = foutA$genologlike,
+                                                      gb = foutB$genologlike,
+                                                      K = paramdf$ploidy[[i]],
+                                                      type = "comp",
+                                                      pen = 2,
+                                                      se = FALSE)
+                              )[[3]]
+
+                              paramdf$com_D_est[[i]]   <- ldcom[["D"]]
+                              paramdf$com_D_se[[i]]    <- ldcom[["D_se"]]
+                              paramdf$com_Dprime_est[[i]] <- ldcom[["Dprime"]]
+                              paramdf$com_Dprime_se[[i]]  <- ldcom[["Dprime_se"]]
+                              paramdf$com_r2_est[[i]]  <- ldcom[["r2"]]
+                              paramdf$com_r2_se[[i]]   <- ldcom[["r2_se"]]
+                              paramdf$com_z_est[[i]]   <- ldcom[["z"]]
+                              paramdf$com_z_se[[i]]    <- ldcom[["z_se"]]
+                              paramdf$com_r_est[[i]]   <- ldcom[["r"]]
+                              paramdf$com_r_se[[i]]    <- ldcom[["r_se"]]
+                            }, error = function(e) NULL)
+
+                            tryCatch({
+                              paramdf$com_nopen_time[[i]] <- system.time(
+                                ldcom_nopen <- ldsep::ldest(ga = foutA$genologlike,
+                                                            gb = foutB$genologlike,
+                                                            K = paramdf$ploidy[[i]],
+                                                            type = "comp",
+                                                            pen = 1,
+                                                            se = FALSE)
+                              )[[3]]
+
+                              paramdf$com_nopen_D_est[[i]]   <- ldcom_nopen[["D"]]
+                              paramdf$com_nopen_D_se[[i]]    <- ldcom_nopen[["D_se"]]
+                              paramdf$com_nopen_Dprime_est[[i]] <- ldcom_nopen[["Dprime"]]
+                              paramdf$com_nopen_Dprime_se[[i]]  <- ldcom_nopen[["Dprime_se"]]
+                              paramdf$com_nopen_r2_est[[i]]  <- ldcom_nopen[["r2"]]
+                              paramdf$com_nopen_r2_se[[i]]   <- ldcom_nopen[["r2_se"]]
+                              paramdf$com_nopen_z_est[[i]]   <- ldcom_nopen[["z"]]
+                              paramdf$com_nopen_z_se[[i]]    <- ldcom_nopen[["z_se"]]
+                              paramdf$com_nopen_r_est[[i]]   <- ldcom_nopen[["r"]]
+                              paramdf$com_nopen_r_se[[i]]    <- ldcom_nopen[["r_se"]]
                             }, error = function(e) NULL)
 
                             paramdf[i, , drop = FALSE]
@@ -244,6 +328,3 @@ if (nc > 1) {
 }
 
 write.csv(simdf, "./output/mle/mle_sims_out.csv", row.names = FALSE)
-
-
-
