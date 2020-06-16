@@ -8,6 +8,15 @@ simdf %>%
   distinct() ->
   combodf
 
+get_Dprime <- function(pab, pAb, paB, pAB) {
+  pA <- pAb + pAB
+  pB <- paB + pAB
+  D  <- pAB - pA * pB
+  Dprime <- ifelse(D < 0,
+                   D / pmin(pA * pB, (1 - pA) * (1 - pB)),
+                   D / pmin(pA * (1 - pB), (1 - pA) * pB))
+  return(Dprime)
+}
 
 for (index in seq_len(nrow(combodf))) {
   pAnow <- combodf$pA[[index]]
@@ -15,16 +24,18 @@ for (index in seq_len(nrow(combodf))) {
   nindnow <- combodf$nind[[index]]
 
   simdf %>%
+    mutate(Dprime = get_Dprime(pab = pab, pAb = pAb, paB = paB, pAB = pAB)) %>%
     filter(pA == pAnow, pB == pBnow, nind == nindnow) %>%
     select(size,
            ploidy,
            D,
            r2,
            z,
+           Dprime,
            r,
            ends_with("D_est"),
            ends_with("r2_est"),
-           ends_with("z_est")) %>%
+           ends_with("Dprime_est")) %>%
     pivot_longer(cols = c("mle_D_est",
                           "gen_D_est",
                           "mom_D_est",
@@ -33,17 +44,17 @@ for (index in seq_len(nrow(combodf))) {
                           "gen_r2_est",
                           "mom_r2_est",
                           "com_r2_est",
-                          "mle_z_est",
-                          "gen_z_est",
-                          "mom_z_est",
-                          "com_z_est"),
+                          "mle_Dprime_est",
+                          "gen_Dprime_est",
+                          "mom_Dprime_est",
+                          "com_Dprime_est"),
                  names_to = "method_param",
                  values_to = "estimate")  %>%
     mutate(method_param = str_remove(method_param, "_est$")) %>%
     separate(method_param, into = c("method", "param")) %>%
     mutate(truth = case_when(param == "D" ~ D,
                              param == "r2" ~ r2,
-                             param == "z" ~ z)) %>%
+                             param == "Dprime" ~ Dprime)) %>%
     mutate(truth = round(truth, digits = 2)) %>%
     mutate(method = recode(method,
                            "mom" = "Composite, Posterior\nMean Genotypes",
@@ -205,6 +216,87 @@ for (index in seq_len(nrow(combodf))) {
     pl
 
   ggsave(filename = paste0("./output/mle_plots/r2_mse_nind_",
+                           nindnow,
+                           "_pA_",
+                           round(pAnow * 100),
+                           "_pB_",
+                           round(pBnow * 100),
+                           ".pdf"),
+         plot = pl,
+         height = 6,
+         width = 6,
+         family = "Times")
+
+
+
+  ## Dprime plots --------------------------------------------------
+  sumdf %>%
+    filter(param == "Dprime") %>%
+    ggplot(aes(x = size, y = bias, color = method, lty = method, shape = method)) +
+    facet_grid(ploidy ~ truth) +
+    theme_bw() +
+    theme(strip.background = element_rect(fill = "white")) +
+    geom_line() +
+    geom_point() +
+    geom_hline(yintercept = 0, lty = 2) +
+    scale_color_colorblind() +
+    xlab("Read Depth") +
+    ylab(TeX("$D'$ Bias")) ->
+    pl
+
+  ggsave(filename = paste0("./output/mle_plots/Dprime_bias_nind_",
+                           nindnow,
+                           "_pA_",
+                           round(pAnow * 100),
+                           "_pB_",
+                           round(pBnow * 100),
+                           ".pdf"),
+         plot = pl,
+         height = 6,
+         width = 6,
+         family = "Times")
+
+  sumdf %>%
+    filter(param == "Dprime") %>%
+    ggplot(aes(x = size, y = se, color = method, lty = method, shape = method)) +
+    facet_grid(ploidy ~ truth) +
+    theme_bw() +
+    theme(strip.background = element_rect(fill = "white")) +
+    geom_line() +
+    geom_point() +
+    scale_color_colorblind() +
+    xlab("Read Depth") +
+    ylab(TeX("$r^2$ Standard Error")) +
+    scale_y_log10() ->
+    pl
+
+  ggsave(filename = paste0("./output/mle_plots/Dprime_se_nind_",
+                           nindnow,
+                           "_pA_",
+                           round(pAnow * 100),
+                           "_pB_",
+                           round(pBnow * 100),
+                           ".pdf"),
+         plot = pl,
+         height = 6,
+         width = 6,
+         family = "Times")
+
+  sumdf %>%
+    filter(param == "Dprime") %>%
+    ggplot(aes(x = size, y = mse, color = method, lty = method, shape = method)) +
+    facet_grid(ploidy ~ truth) +
+    theme_bw() +
+    theme(strip.background = element_rect(fill = "white")) +
+    geom_line() +
+    geom_point() +
+    scale_color_colorblind() +
+    xlab("Read Depth") +
+    ylab(TeX("$r^2$ MSE")) +
+    scale_y_log10() ->
+    pl
+
+  ggsave(filename = paste0("./output/mle_plots/Dprime_mse_nind_",
                            nindnow,
                            "_pA_",
                            round(pAnow * 100),

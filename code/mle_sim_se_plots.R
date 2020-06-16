@@ -1,7 +1,6 @@
 library(tidyverse)
 library(ggthemes)
-simdf <- read_csv("../simulations/output/mle/mle_sims_out.csv")
-
+simdf <- read_csv("./output/mle/mle_sims_out.csv")
 
 
 # Haplotypic, Genotype Likelihood -----------------------------------------
