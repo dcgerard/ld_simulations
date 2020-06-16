@@ -29,11 +29,14 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
     
 1. Install the appropriate R packages
     ```{r, eval = FALSE}
-    install.packages(c("tidyverse", 
+    install.packages(c("tidyverse",
+                       "ggthemes",
+                       "latex2exp",
                        "Rcpp",
                        "RcppArmadillo",
                        "foreach",
                        "doParallel",
+                       "corrplot",
                        "devtools"))
     devtools::install_github("dcgerard/updog")
     devtools::install_github("dcgerard/ldsep")
@@ -58,15 +61,15 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
     Make sure that you have added `~/.local/bin` to the `PATH` by adding the
     following to your `.bashrc` file:
     
-    ```bash
+    ``` bash
     export PATH=$PATH:~/.local/bin
     ```
 
 4. Run `make`. This will run all of the simulations.
 
-  ```bash
-  make
-  ```
+    ``` bash
+    make
+    ```
   
   You may choose to run only part of hte simulations `make mle` or `make ngsLD`.
 

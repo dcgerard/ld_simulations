@@ -19,11 +19,14 @@ simulatoins.
 1.  Install the appropriate R packages
     
     ``` r
-    install.packages(c("tidyverse", 
+    install.packages(c("tidyverse",
+                       "ggthemes",
+                       "latex2exp",
                        "Rcpp",
                        "RcppArmadillo",
                        "foreach",
                        "doParallel",
+                       "corrplot",
                        "devtools"))
     devtools::install_github("dcgerard/updog")
     devtools::install_github("dcgerard/ldsep")
@@ -55,12 +58,10 @@ simulatoins.
     ```
 
 4.  Run `make`. This will run all of the simulations.
-
-<!-- end list -->
-
-``` bash
-make
-```
+    
+    ``` bash
+    make
+    ```
 
 You may choose to run only part of hte simulations `make mle` or `make
 ngsLD`.
