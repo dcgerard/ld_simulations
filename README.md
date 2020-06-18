@@ -57,7 +57,28 @@ simulatoins.
     export PATH=$PATH:~/.local/bin
     ```
 
-4.  Run `make`. This will run all of the simulations.
+4.  Download the following files from Uitdewilligen et. al. (2013),
+    place them in the “data” folder, and extract them.
+    
+      - <https://doi.org/10.1371/journal.pone.0062355.s004>
+      - <https://doi.org/10.1371/journal.pone.0062355.s007>
+    
+    You can do this with the following bash code
+    
+    ``` bash
+    sudo apt-get install p7zip p7zip-full p7zip-rar
+    wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s004
+    mv ./data/journal.pone.0062355.s004 ./data/journal.pone.0062355.s004.gz
+    wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s007
+    mv ./data/journal.pone.0062355.s007 ./data/journal.pone.0062355.s007.gz
+    7z e ./data/journal.pone.0062355.s004.gz -o./data/
+    7z e ./data/journal.pone.0062355.s007.gz -o./data/
+    ```
+    
+    As long as you have 7z installed, `make` will attempt to download
+    and extract the files for you.
+
+5.  Run `make`. This will run all of the simulations.
     
     ``` bash
     make
@@ -95,6 +116,12 @@ ngsLD`.
 Note that I’ve also only tried this on Ubuntu.
 
 ## References
+
+  - Uitdewilligen, Jan GAML, Anne-Marie A. Wolters, Bjorn B. D’hoop,
+    Theo JA Borm, Richard GF Visser, and Herman J. van Eck. “A
+    next-generation sequencing method for genotyping-by-sequencing of
+    highly heterozygous autotetraploid potato.” *PloS one* 8, no. 5
+    (2013).
 
 <div id="refs" class="references">
 

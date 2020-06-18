@@ -34,10 +34,11 @@ full <- left_join(ldsepout, ngsout, by = c("i", "j"))
 full %>%
   rename(r2_ngsLD = r2.x,
          D_ngsLD = D.x,
-         Dprime_ngsLD = Dprime,
+         Dprime_ngsLD = Dprime.x,
          r2_ldsep = r2.y,
          r_ldsep = r,
-         D_ldsep = D.y) ->
+         D_ldsep = D.y,
+         Dprime_ldsep = Dprime.y) ->
   full
 
 full %>%

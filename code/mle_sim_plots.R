@@ -40,14 +40,17 @@ for (index in seq_len(nrow(combodf))) {
                           "gen_D_est",
                           "mom_D_est",
                           "com_D_est",
+                          "comnorm_D_est",
                           "mle_r2_est",
                           "gen_r2_est",
                           "mom_r2_est",
                           "com_r2_est",
+                          "comnorm_r2_est",
                           "mle_Dprime_est",
                           "gen_Dprime_est",
                           "mom_Dprime_est",
-                          "com_Dprime_est"),
+                          "com_Dprime_est",
+                          "comnorm_Dprime_est"),
                  names_to = "method_param",
                  values_to = "estimate")  %>%
     mutate(method_param = str_remove(method_param, "_est$")) %>%
@@ -57,8 +60,9 @@ for (index in seq_len(nrow(combodf))) {
                              param == "Dprime" ~ Dprime)) %>%
     mutate(truth = round(truth, digits = 2)) %>%
     mutate(method = recode(method,
+                           "comnorm" = "Composite,\nProportional Normal",
                            "mom" = "Composite, Posterior\nMean Genotypes",
-                           "com" = "Composite, Genotype\nLikelihoods",
+                           "com" = "Composite,\nGeneral Categorical",
                            "mle" = "Haplotypic, Genotype\nLikelihoods",
                            "gen" = "Haplotypic, Posterior\nMode Genotypes")) %>%
     group_by(size, ploidy, method, param, truth) %>%
