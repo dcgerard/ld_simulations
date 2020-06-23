@@ -9,7 +9,7 @@ This repository contains the code and instructions needed to reproduce
 all of the results from Gerard (2020).
 
 If you find a bug, please create an
-[issue](https://github.com/dcgerard/reproduce_pairwise_ld/issues).
+[issue](https://github.com/dcgerard/ld_simulations/issues).
 
 ## Instructions
 
@@ -47,15 +47,22 @@ simulatoins.
     
       - <https://doi.org/10.1371/journal.pone.0062355.s004>
       - <https://doi.org/10.1371/journal.pone.0062355.s007>
+      - <https://doi.org/10.1371/journal.pone.0062355.s009>
+      - <https://doi.org/10.1371/journal.pone.0062355.s010>
     
-    You can do this with the following bash code
+    You can do this with the following bash code from the top directory
+    of the ld\_simulations
+    repo.
     
     ``` bash
-    sudo apt-get install p7zip p7zip-full p7zip-rar
     wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s004
     mv ./data/journal.pone.0062355.s004 ./data/journal.pone.0062355.s004.gz
     wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s007
-    mv ./data/journal.pone.0062355.s007 ./data/journal.pone.0062355.s007.gz
+    mv ./data/journal.pone.0062355.s007 ./data/journal.pone.0062355.s007.gz 
+    wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s009
+    mv ./data/journal.pone.0062355.s009 ./data/journal.pone.0062355.s009.xls 
+    wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s010
+    mv ./data/journal.pone.0062355.s010 ./data/journal.pone.0062355.s010.xls 
     7z e ./data/journal.pone.0062355.s004.gz -o./data/
     7z e ./data/journal.pone.0062355.s007.gz -o./data/
     ```
@@ -77,8 +84,8 @@ simulatoins.
     make
     ```
 
-You may choose to run only part of the simulations `make mle` or `make
-ngsLD`.
+You may choose to run only part of the simulations `make mle`, `make
+ngsLD`, or `make uit`.
 
 6.  Get coffee/sweets. Running `make sims` should take a few hours. You
     should get some coffee\! Here is a list of some of my favorite
