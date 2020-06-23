@@ -21,6 +21,7 @@ if (length(args) == 0) {
 } else {
   eval(parse(text = args[[1]]))
 }
+
 cat(nc, "\n")
 
 ## Parameters of simulations setting ------------------------------------------

@@ -27,7 +27,8 @@ simulatoins.
                        "foreach",
                        "doParallel",
                        "corrplot",
-                       "devtools"))
+                       "devtools",
+                       "vcfR"))
     devtools::install_github("dcgerard/updog")
     devtools::install_github("dcgerard/ldsep")
     ```

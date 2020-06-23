@@ -65,9 +65,35 @@ mleqqplots = ./output/mle_se_plots/qq_nind100_pA50_pB50_r0.pdf \
 
 # uitdewilligen data
 uitdat = ./data/NewPlusOldCalls.headed.vcf \
-         CSV-file\ S1\ -\ Sequence\ variants\ filtered\ DP15.csv
+         ./data/CSV-file\ S1\ -\ Sequence\ variants\ filtered\ DP15.csv \
+         ./data/journal.pone.0062355.s009.xls \
+         ./data/journal.pone.0062355.s010.xls
 
-all : mle ngsLD
+# Subset of uitdewilligen data
+uitsnps = ./output/uit/refmat_suc.RDS \
+          ./output/uit/sizemat_suc.RDS \
+          ./output/uit/uit_suc.csv
+
+# Uitdewilligen LD estimates on subset
+uitld = ./output/uit/ldest_hap_genolike.RDS \
+        ./output/uit/ldest_hap_geno.RDS \
+        ./output/uit/ldest_comp_genolike.RDS \
+        ./output/uit/ldest_comp_genolike_flex.RDS \
+        ./output/uit/ldest_comp_geno.RDS
+
+# Plots from Uitdewilligen LD estimates on subset
+uitfig = ./output/uit/uit_fig/heat_comp_geno.pdf \
+         ./output/uit/uit_fig/heat_comp_genolike.pdf \
+         ./output/uit/uit_fig/heat_comp_genolike_flex.pdf \
+         ./output/uit/uit_fig/heat_hap_geno.pdf \
+         ./output/uit/uit_fig/heat_hap_genolike.pdf \
+         ./output/uit/uit_fig/uit_pairs.pdf \
+         ./output/uit/uit_fig/diff11.pdf \
+         ./output/uit/uit_fig/diff22.pdf \
+         ./output/uit/uit_fig/box12.pdf \
+
+
+all : mle ngsLD uit
 
 # Pairwise LD estimation simulations ---------------
 ./output/mle/mle_sims_out.csv : ./code/mle_sims.R
@@ -113,13 +139,36 @@ ngsLD : ./output/fig/D_ngsld_ldsep.pdf
 # Uitdewilligen analysis
 $(uitdat) :
 	wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s004
-	mv ./data/journal.pone.0062355.s004 ./data/journal.pone.0062355.s004.gz
+	mv ./data/journal.pone.0062355.s004 ./data/journal.pone.0062355.s004.gz ## variant annotations
 	wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s007
-	mv ./data/journal.pone.0062355.s007 ./data/journal.pone.0062355.s007.gz
+	mv ./data/journal.pone.0062355.s007 ./data/journal.pone.0062355.s007.gz ## read-depth data
+	wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s009
+	mv ./data/journal.pone.0062355.s009 ./data/journal.pone.0062355.s009.xls ## super scaffold annotations
+	wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s010
+	mv ./data/journal.pone.0062355.s010 ./data/journal.pone.0062355.s010.xls ## contig annotations
 	7z e ./data/journal.pone.0062355.s004.gz -o./data/
 	7z e ./data/journal.pone.0062355.s007.gz -o./data/
 
+$(uitsnps) : ./code/uit_extract.R $(uitdat)
+	mkdir -p ./output/uit
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+./output/uit/uit_updog_fit.RDS : ./code/uit_fit_updog.R $(uitsnps)
+	mkdir -p ./output/uit
+	mkdir -p ./output/rout
+	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(uitld) : ./code/uit_est_ld.R ./output/uit/uit_updog_fit.RDS
+	mkdir -p ./output/uit
+	mkdir -p ./output/rout
+	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(uitfig) : ./code/uit_compare_ld.R $(uitld)
+	mkdir -p ./output/uit
+	mkdir -p ./output/uit/uit_fig
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
 .PHONY : uit
-uit : $(uitdat)
-
-
+uit : $(uitfig)

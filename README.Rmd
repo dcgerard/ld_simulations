@@ -37,7 +37,8 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
                        "foreach",
                        "doParallel",
                        "corrplot",
-                       "devtools"))
+                       "devtools",
+                       "vcfR"))
     devtools::install_github("dcgerard/updog")
     devtools::install_github("dcgerard/ldsep")
     ```
@@ -84,6 +85,12 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
     ```
     
     As long as you have 7z installed, `make` will attempt to download and extract the files for you.
+    
+4. Download the data from [McAllister et. al. (2017)](https://doi.org/10.5061/dryad.05qs7) and unzip it. I unzipped using 7zip:
+    
+    ``` bash
+    7z e doi_10.5061_dryad.05qs7__v1.zip 
+    ```
 
 4. Run `make`. This will run all of the simulations.
 
@@ -115,3 +122,5 @@ Note that I've also only tried this on Ubuntu.
 ## References
     
 - Uitdewilligen, Jan GAML, Anne-Marie A. Wolters, Bjorn B. D’hoop, Theo JA Borm, Richard GF Visser, and Herman J. van Eck. "A next-generation sequencing method for genotyping-by-sequencing of highly heterozygous autotetraploid potato." _PloS one_ 8, no. 5 (2013).
+
+- McAllister, Christine; Miller, Allison J.; McAllister, Christine A. (2017), Data from: Single nucleotide polymorphism discovery via genotyping by sequencing to assess population genetic structure and recurrent polyploidization in Andropogon gerardii, Dryad, Dataset, https://doi.org/10.5061/dryad.05qs7
