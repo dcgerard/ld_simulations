@@ -77,7 +77,7 @@ simulatoins.
     make
     ```
 
-You may choose to run only part of hte simulations `make mle` or `make
+You may choose to run only part of the simulations `make mle` or `make
 ngsLD`.
 
 6.  Get coffee/sweets. Running `make sims` should take a few hours. You
@@ -125,8 +125,8 @@ likelihoods.” *Bioinformatics* 35 (19): 3855–6.
 
 <div id="ref-gerard2020pairwise">
 
-Gerard, David. 2020. “Pairwise Linkage Disequilibrium Shrinkage
-Estimation for Autopolyploids.”
+Gerard, David. 2020. “Pairwise Linkage Disequilibrium Estimation for
+Polyploids.” *Unpublished Manuscript*.
 
 </div>
 

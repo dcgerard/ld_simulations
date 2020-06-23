@@ -83,7 +83,7 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
     make
     ```
   
-  You may choose to run only part of hte simulations `make mle` or `make ngsLD`.
+  You may choose to run only part of the simulations `make mle` or `make ngsLD`.
 
 6. Get coffee/sweets. Running `make sims` should take a few hours. You should get 
    some coffee! Here is a list of some of my favorite places:
