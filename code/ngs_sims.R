@@ -4,7 +4,11 @@ nsnp <- 20
 loglarray <- readRDS(file = "./output/ngs_out/updog_format.RDS")
 
 ldsep_time <- system.time({
-  ldsep_out <- mldest_genolike(genoarray = loglarray, nc = 1, pen = 1)
+  ldsep_out <- mldest(geno = loglarray,
+                      nc = 1,
+                      type = "hap",
+                      pen = 1,
+                      se = FALSE)
 })
 
 write.table(x = ldsep_out,

@@ -90,7 +90,11 @@ uitfig = ./output/uit/uit_fig/heat_comp_geno.pdf \
          ./output/uit/uit_fig/uit_pairs.pdf \
          ./output/uit/uit_fig/diff11.pdf \
          ./output/uit/uit_fig/diff22.pdf \
-         ./output/uit/uit_fig/box12.pdf \
+         ./output/uit/uit_fig/box12.pdf
+
+# Properties of Uitdewilligen SNPs
+uitprop = ./output/uit/uit_fig/maf.pdf \
+          ./output/uit/uit_fig/readdepth.pdf
 
 
 all : mle ngsLD uit
@@ -170,5 +174,11 @@ $(uitfig) : ./code/uit_compare_ld.R $(uitld)
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
+$(uitprop) : ./code/uit_prop.R ./output/uit/uit_updog_fit.RDS
+	mkdir -p ./output/uit
+	mkdir -p ./output/uit/uit_fig
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
 .PHONY : uit
-uit : $(uitfig)
+uit : $(uitfig) $(uitprop)
