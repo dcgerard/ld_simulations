@@ -33,33 +33,17 @@ simulatoins.
     devtools::install_github("dcgerard/ldsep")
     ```
 
-2.  Install ngsLD in the working directory of the simulation files:
-    <https://github.com/fgvieira/ngsLD>
+2.  Install ngsLD (Fox et al. 2019) in the working directory of the
+    simulation files: <https://github.com/fgvieira/ngsLD>
     
     ``` bash
     git clone https://github.com/fgvieira/ngsLD.git
-      cd ngsLD
-      make
+    cd ngsLD
+    make
     ```
 
-3.  Install msprime:
-    <https://msprime.readthedocs.io/en/stable/installation.html>
-    
-    I did this via pip:
-    
-    ``` bash
-    pip3 install msprime
-    ```
-    
-    Make sure that you have added `~/.local/bin` to the `PATH` by adding
-    the following to your `.bashrc` file:
-    
-    ``` bash
-    export PATH=$PATH:~/.local/bin
-    ```
-
-4.  Download the following files from Uitdewilligen et. al. (2013),
-    place them in the “data” folder, and extract them.
+3.  Download the following files from Uitdewilligen (2013), place them
+    in the “data” folder, and extract them.
     
       - <https://doi.org/10.1371/journal.pone.0062355.s004>
       - <https://doi.org/10.1371/journal.pone.0062355.s007>
@@ -79,6 +63,14 @@ simulatoins.
     As long as you have 7z installed, `make` will attempt to download
     and extract the files for you.
 
+4.  Download the data from McAllister and Miller (2016)
+    <https://doi.org/10.5061/dryad.05qs7> and unzip it. I unzipped using
+    7z:
+    
+    ``` bash
+    7z e doi_10.5061_dryad.05qs7__v1.zip 
+    ```
+
 5.  Run `make`. This will run all of the simulations.
     
     ``` bash
@@ -88,13 +80,15 @@ simulatoins.
 You may choose to run only part of hte simulations `make mle` or `make
 ngsLD`.
 
-5.  Get coffee/sweets. Running `make sims` should take a few hours. You
+6.  Get coffee/sweets. Running `make sims` should take a few hours. You
     should get some coffee\! Here is a list of some of my favorite
     places:
     
       - Washington, DC
           - [Colony
             Club](https://www.yelp.com/biz/colony-club-washington)
+          - [Little Red
+            Fox](https://www.yelp.com/biz/little-red-fox-washington)
           - [Three
             Fifty](https://www.yelp.com/biz/three-fifty-bakery-and-coffee-bar-washington)
             (for the baked goods, coffee is meh)
@@ -118,18 +112,41 @@ Note that I’ve also only tried this on Ubuntu.
 
 ## References
 
-  - Uitdewilligen, Jan GAML, Anne-Marie A. Wolters, Bjorn B. D’hoop,
-    Theo JA Borm, Richard GF Visser, and Herman J. van Eck. “A
-    next-generation sequencing method for genotyping-by-sequencing of
-    highly heterozygous autotetraploid potato.” *PloS one* 8, no. 5
-    (2013).
-
 <div id="refs" class="references">
+
+<div id="ref-fox2019ngsld">
+
+Fox, Emma A, Alison E Wright, Matteo Fumagalli, and Filipe G Vieira.
+2019. “ngsLD: evaluating linkage disequilibrium using genotype
+likelihoods.” *Bioinformatics* 35 (19): 3855–6.
+<https://doi.org/10.1093/bioinformatics/btz200>.
+
+</div>
 
 <div id="ref-gerard2020pairwise">
 
 Gerard, David. 2020. “Pairwise Linkage Disequilibrium Shrinkage
 Estimation for Autopolyploids.”
+
+</div>
+
+<div id="ref-mcallister2016single">
+
+McAllister, Christine A., and Allison J. Miller. 2016. “Single
+Nucleotide Polymorphism Discovery via Genotyping by Sequencing to Assess
+Population Genetic Structure and Recurrent Polyploidization in
+*Andropogon Gerardii*.” *American Journal of Botany* 103 (7): 1314–25.
+<https://doi.org/10.3732/ajb.1600146>.
+
+</div>
+
+<div id="ref-uitdewilligen2013next">
+
+Uitdewilligen, Anne-Marie A. AND D’hoop, Jan G. A. M. L. AND Wolters.
+2013. “A Next-Generation Sequencing Method for Genotyping-by-Sequencing
+of Highly Heterozygous Autotetraploid Potato.” *PLOS ONE* 8 (5). Public
+Library of Science: 1–14.
+<https://doi.org/10.1371/journal.pone.0062355>.
 
 </div>
 
