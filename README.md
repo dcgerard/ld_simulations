@@ -19,16 +19,18 @@ simulatoins.
 1.  Install the appropriate R packages
     
     ``` r
-    install.packages(c("tidyverse",
-                       "ggthemes",
-                       "latex2exp",
-                       "Rcpp",
-                       "RcppArmadillo",
-                       "foreach",
-                       "doParallel",
-                       "corrplot",
-                       "devtools",
-                       "vcfR"))
+    install.packages("BiocManager")
+    BiocManager::install(c("tidyverse",
+                           "ggthemes",
+                           "latex2exp",
+                           "Rcpp",
+                           "RcppArmadillo",
+                           "foreach",
+                           "doParallel",
+                           "corrplot",
+                           "devtools",
+                           "vcfR",
+                           "VariantAnnotation"))
     devtools::install_github("dcgerard/updog")
     devtools::install_github("dcgerard/ldsep")
     ```
@@ -116,6 +118,82 @@ ngsLD`, or `make uit`.
             Roasters](https://www.yelp.com/biz/staufs-coffee-roasters-columbus-2)
 
 Note that I’ve also only tried this on Ubuntu.
+
+# Session Information
+
+    #> R version 4.0.1 (2020-06-06)
+    #> Platform: x86_64-pc-linux-gnu (64-bit)
+    #> Running under: Ubuntu 20.04 LTS
+    #> 
+    #> Matrix products: default
+    #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+    #> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
+    #> 
+    #> locale:
+    #>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+    #>  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+    #>  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+    #>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+    #>  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+    #> [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+    #> 
+    #> attached base packages:
+    #> [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
+    #> [8] methods   base     
+    #> 
+    #> other attached packages:
+    #>  [1] ldsep_0.0.0.9005            updog_2.0.1                
+    #>  [3] VariantAnnotation_1.34.0    Rsamtools_2.4.0            
+    #>  [5] Biostrings_2.56.0           XVector_0.28.0             
+    #>  [7] SummarizedExperiment_1.18.1 DelayedArray_0.14.0        
+    #>  [9] matrixStats_0.56.0          Biobase_2.48.0             
+    #> [11] GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
+    #> [13] IRanges_2.22.2              S4Vectors_0.26.1           
+    #> [15] BiocGenerics_0.34.0         vcfR_1.11.0                
+    #> [17] devtools_2.3.0              usethis_1.6.1              
+    #> [19] corrplot_0.84               doParallel_1.0.15          
+    #> [21] iterators_1.0.12            foreach_1.5.0              
+    #> [23] RcppArmadillo_0.9.900.1.0   Rcpp_1.0.4.6               
+    #> [25] latex2exp_0.4.0             ggthemes_4.2.0             
+    #> [27] forcats_0.5.0               stringr_1.4.0              
+    #> [29] dplyr_1.0.0                 purrr_0.3.4                
+    #> [31] readr_1.3.1                 tidyr_1.1.0                
+    #> [33] tibble_3.0.1                ggplot2_3.3.2              
+    #> [35] tidyverse_1.3.0             BiocManager_1.30.10        
+    #> 
+    #> loaded via a namespace (and not attached):
+    #>  [1] colorspace_1.4-1         ellipsis_0.3.1           rprojroot_1.3-2         
+    #>  [4] fs_1.4.1                 rstudioapi_0.11          remotes_2.1.1           
+    #>  [7] bit64_0.9-7              AnnotationDbi_1.50.0     fansi_0.4.1             
+    #> [10] lubridate_1.7.9          xml2_1.3.2               codetools_0.2-16        
+    #> [13] splines_4.0.1            knitr_1.29               pkgload_1.1.0           
+    #> [16] jsonlite_1.6.1           broom_0.5.6              cluster_2.1.0           
+    #> [19] dbplyr_1.4.4             compiler_4.0.1           httr_1.4.1              
+    #> [22] backports_1.1.8          assertthat_0.2.1         Matrix_1.2-18           
+    #> [25] cli_2.0.2                htmltools_0.5.0          prettyunits_1.1.1       
+    #> [28] tools_4.0.1              gtable_0.3.0             glue_1.4.1              
+    #> [31] GenomeInfoDbData_1.2.3   rappdirs_0.3.1           cellranger_1.1.0        
+    #> [34] vctrs_0.3.1              ape_5.4                  nlme_3.1-147            
+    #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.15               
+    #> [40] ps_1.3.3                 testthat_2.3.2           rvest_0.3.5             
+    #> [43] lifecycle_0.2.0          XML_3.99-0.3             MASS_7.3-51.6           
+    #> [46] zlibbioc_1.34.0          scales_1.1.1             BSgenome_1.56.0         
+    #> [49] hms_0.5.3                curl_4.3                 yaml_2.2.1              
+    #> [52] memoise_1.1.0            biomaRt_2.44.1           RSQLite_2.2.0           
+    #> [55] stringi_1.4.6            desc_1.2.0               permute_0.9-5           
+    #> [58] GenomicFeatures_1.40.0   BiocParallel_1.22.0      pkgbuild_1.0.8          
+    #> [61] rlang_0.4.6              pkgconfig_2.0.3          bitops_1.0-6            
+    #> [64] evaluate_0.14            lattice_0.20-41          GenomicAlignments_1.24.0
+    #> [67] bit_1.1-15.2             processx_3.4.2           tidyselect_1.1.0        
+    #> [70] magrittr_1.5             R6_2.4.1                 generics_0.0.2          
+    #> [73] DBI_1.1.0                pillar_1.4.4             haven_2.3.1             
+    #> [76] withr_2.2.0              mgcv_1.8-31              RCurl_1.98-1.2          
+    #> [79] modelr_0.1.8             crayon_1.3.4             BiocFileCache_1.12.0    
+    #> [82] rmarkdown_2.3            progress_1.2.2           grid_4.0.1              
+    #> [85] readxl_1.3.1             blob_1.2.1               callr_3.4.3             
+    #> [88] vegan_2.5-6              reprex_0.3.0             digest_0.6.25           
+    #> [91] openssl_1.4.1            munsell_0.5.0            viridisLite_0.3.0       
+    #> [94] askpass_1.1              sessioninfo_1.1.1
 
 ## References
 

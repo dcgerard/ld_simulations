@@ -63,6 +63,10 @@ mleqqplots = ./output/mle_se_plots/qq_nind100_pA50_pB50_r0.pdf \
              ./output/mle_se_plots/comnorm_se_est.pdf \
              ./output/mle_se_plots/mle_se_est.pdf
 
+# Plots showing flexibility of proportional bivariate normal distribution
+normplots = ./output/compare_norm/normdist.pdf \
+            ./output/compare_norm/randnorm.pdf
+
 # uitdewilligen data
 uitdat = ./data/NewPlusOldCalls.headed.vcf \
          ./data/CSV-file\ S1\ -\ Sequence\ variants\ filtered\ DP15.csv \
@@ -96,8 +100,21 @@ uitfig = ./output/uit/uit_fig/heat_comp_geno.pdf \
 uitprop = ./output/uit/uit_fig/maf.pdf \
           ./output/uit/uit_fig/readdepth.pdf
 
+# Raw data from McAllister et al (2017)
+mcadat = ./data/gerardii/McAllister.Miller.all.mergedRefGuidedSNPs.vcf.gz \
+         ./data/gerardii/McAllister_Miller_Locality_Ploidy_Info.csv
 
-all : mle ngsLD uit
+# Subset of McAllister data
+mcasnps = ./output/mca/refmat_hex.RDS \
+          ./output/mca/sizemat_hex.RDS \
+          ./output/mca/refmat_non.RDS \
+          ./output/mca/sizemat_non.RDS
+
+# Updog fits of McAllister data
+mcaupdog = ./output/mca/updog_fits_hex.RDS \
+           ./output/mca/updog_fits_non.RDS
+
+all : mle ngsLD uit mca norm
 
 # Pairwise LD estimation simulations ---------------
 ./output/mle/mle_sims_out.csv : ./code/mle_sims.R
@@ -132,13 +149,13 @@ $(ngsprep) : ./code/ngs_sim_data.R
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
-./output/fig/D_ngsld_ldsep.pdf : ./code/ngsld_vs_ldsep.R ./output/ngs_out/lsep_out.tsv ./output/ngs_out/ngs_fit.tsv
-	mkdir -p ./output/fig
+./output/ngs_out/D_ngsld_ldsep.pdf : ./code/ngsld_vs_ldsep.R ./output/ngs_out/lsep_out.tsv ./output/ngs_out/ngs_fit.tsv
+	mkdir -p ./output/ngs_out
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
 .PHONY : ngsLD
-ngsLD : ./output/fig/D_ngsld_ldsep.pdf
+ngsLD : ./output/ngs_out/D_ngsld_ldsep.pdf
 
 # Uitdewilligen analysis
 $(uitdat) :
@@ -182,3 +199,28 @@ $(uitprop) : ./code/uit_prop.R ./output/uit/uit_updog_fit.RDS
 
 .PHONY : uit
 uit : $(uitfig) $(uitprop)
+
+
+# Analysis of Mcallister et al (2017) Data
+$(mcasnps) : ./code/mca_extract.R $(mcadat)
+	mkdir -p ./output/mca
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(mcaupdog) : ./code/mca_fit_updog.R $(mcasnps)
+	mkdir -p ./output/mca
+	mkdir -p ./output/rout
+	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
+
+.PHONY : mca
+mca : $(mcaupdog)
+
+
+# Proportional normal distribution plots
+$(normplots) : ./code/pbnorm_flex.R
+	mkdir -p ./output/compare_norm
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+.PHONY : norm
+norm: $(normplots)

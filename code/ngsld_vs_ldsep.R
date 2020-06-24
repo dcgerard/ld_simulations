@@ -50,7 +50,7 @@ full %>%
   ylab("D ldsep") ->
   pl
 
-ggsave(filename = "./output/fig/D_ngsld_ldsep.pdf",
+ggsave(filename = "./output/ngs_out/D_ngsld_ldsep.pdf",
        plot = pl,
        height = 3,
        width = 3,

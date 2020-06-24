@@ -29,19 +29,40 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
     
 1. Install the appropriate R packages
     ```{r, eval = FALSE}
-    install.packages(c("tidyverse",
-                       "ggthemes",
-                       "latex2exp",
-                       "Rcpp",
-                       "RcppArmadillo",
-                       "foreach",
-                       "doParallel",
-                       "corrplot",
-                       "devtools",
-                       "vcfR"))
+    install.packages("BiocManager")
+    BiocManager::install(c("tidyverse",
+                           "ggthemes",
+                           "latex2exp",
+                           "Rcpp",
+                           "RcppArmadillo",
+                           "foreach",
+                           "doParallel",
+                           "corrplot",
+                           "devtools",
+                           "vcfR",
+                           "VariantAnnotation"))
     devtools::install_github("dcgerard/updog")
     devtools::install_github("dcgerard/ldsep")
     ```
+    
+```{r, echo = FALSE, eval = TRUE, message = FALSE, warning=FALSE, results='hide'}
+pkgvec <- c("BiocManager", 
+            "tidyverse",
+            "ggthemes",
+            "latex2exp",
+            "Rcpp",
+            "RcppArmadillo",
+            "foreach",
+            "doParallel",
+            "corrplot",
+            "devtools",
+            "vcfR",
+            "VariantAnnotation",
+            "updog",
+            "ldsep")
+lapply(pkgvec, require, character.only = TRUE)
+```
+    
     
 2. Install ngsLD [@fox2019ngsld] in the working directory of the simulation files: <https://github.com/fgvieira/ngsLD>
     
@@ -109,5 +130,11 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
 
 
 Note that I've also only tried this on Ubuntu.
+
+# Session Information
+
+```{r, echo = FALSE}
+sessionInfo()
+```
 
 ## References
