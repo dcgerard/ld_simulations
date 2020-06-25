@@ -114,6 +114,20 @@ mcasnps = ./output/mca/refmat_hex.RDS \
 mcaupdog = ./output/mca/updog_fits_hex.RDS \
            ./output/mca/updog_fits_non.RDS
 
+# McAllister LD estimates from hexaploids
+mcaldhex = ./output/mca/ldest_hap_genolike_hex.RDS \
+           ./output/mca/ldest_hap_geno_hex.RDS \
+           ./output/mca/ldest_comp_genolike_hex.RDS \
+           ./output/mca/ldest_comp_genolike_flex_hex.RDS \
+           ./output/mca/ldest_comp_geno_hex.RDS
+
+# McAllister LD estimates from nonaploids
+mcaldnon = ./output/mca/ldest_hap_genolike_non.RDS \
+           ./output/mca/ldest_hap_geno_non.RDS \
+           ./output/mca/ldest_comp_genolike_non.RDS \
+           ./output/mca/ldest_comp_genolike_flex_non.RDS \
+           ./output/mca/ldest_comp_geno_non.RDS
+
 all : mle ngsLD uit mca norm
 
 # Pairwise LD estimation simulations ---------------
@@ -212,8 +226,18 @@ $(mcaupdog) : ./code/mca_fit_updog.R $(mcasnps)
 	mkdir -p ./output/rout
 	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
 
+$(mcaldhex) : ./code/mca_est_ld_hex.R $(mcaupdog)
+	mkdir -p ./output/mca
+	mkdir -p ./output/rout
+	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(mcaldnon) : ./code/mca_est_ld_non.R $(mcaupdog)
+	mkdir -p ./output/mca
+	mkdir -p ./output/rout
+	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
+
 .PHONY : mca
-mca : $(mcaupdog)
+mca : $(mcaldhex) $(mcaldnon)
 
 
 # Proportional normal distribution plots
