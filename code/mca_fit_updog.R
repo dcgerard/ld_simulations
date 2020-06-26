@@ -24,7 +24,15 @@ mouthex <- multidog(refmat  = refhex,
                     sizemat = sizehex,
                     ploidy  = 6,
                     model   = "norm",
-                    nc      = nc)
+                    nc      = nc,
+                    bias_init = 1,
+                    seq = 0.001,
+                    od = 0.01,
+                    update_bias = FALSE,
+                    update_od = FALSE,
+                    update_seq = FALSE)
+
+# mouthex <- filter_snp(x = mouthex, expr = (alpha > 0.1) & (alpha < 0.9))
 
 saveRDS(object = mouthex, file = "./output/mca/updog_fits_hex.RDS")
 
@@ -34,6 +42,14 @@ moutnon <- multidog(refmat  = refnon,
                     sizemat = sizenon,
                     ploidy  = 9,
                     model   = "norm",
-                    nc      = nc)
+                    nc      = nc,
+                    bias_init = 1,
+                    seq = 0.001,
+                    od = 0.01,
+                    update_bias = FALSE,
+                    update_od = FALSE,
+                    update_seq = FALSE)
+
+# moutnon <- filter_snp(x = moutnon, expr = (alpha > 0.1) & (alpha < 0.9))
 
 saveRDS(object = moutnon, file = "./output/mca/updog_fits_non.RDS")

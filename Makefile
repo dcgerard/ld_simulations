@@ -128,6 +128,17 @@ mcaldnon = ./output/mca/ldest_hap_genolike_non.RDS \
            ./output/mca/ldest_comp_genolike_flex_non.RDS \
            ./output/mca/ldest_comp_geno_non.RDS
 
+# McAllister LD heatmap plots for hexaploids
+mcaplots = ./output/mca/mca_plots/heat_mca_comp_geno.pdf \
+           ./output/mca/mca_plots/heat_mca_comp_genolike_flex.pdf \
+           ./output/mca/mca_plots/heat_mca_comp_genolike.pdf \
+           ./output/mca/mca_plots/heat_mca_hap_geno.pdf \
+           ./output/mca/mca_plots/heat_mca_hap_genolike.pdf \
+           ./output/mca/mca_plots/shrink_mca_comp_geno.pdf \
+           ./output/mca/mca_plots/shrink_mca_comp_genolike.pdf \
+           ./output/mca/mca_plots/shrink_mca_hap_geno.pdf \
+           ./output/mca/mca_plots/shrink_mca_hap_genolike.pdf
+
 all : mle ngsLD uit mca norm
 
 # Pairwise LD estimation simulations ---------------
@@ -236,9 +247,14 @@ $(mcaldnon) : ./code/mca_est_ld_non.R $(mcaupdog)
 	mkdir -p ./output/rout
 	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
 
-.PHONY : mca
-mca : $(mcaldhex) $(mcaldnon)
+$(mcaplots) : ./code/mca_plot_ld.R $(mcaldhex) $(mcaldnon)
+	mkdir -p ./output/mca
+	mkdir -p ./output/mca/mca_plots
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
+.PHONY : mca
+mca : $(mcaplots)
 
 # Proportional normal distribution plots
 $(normplots) : ./code/pbnorm_flex.R
