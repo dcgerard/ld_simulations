@@ -139,7 +139,7 @@ mcaplots = ./output/mca/mca_plots/heat_mca_comp_geno.pdf \
            ./output/mca/mca_plots/shrink_mca_hap_geno.pdf \
            ./output/mca/mca_plots/shrink_mca_hap_genolike.pdf
 
-all : mle ngsLD uit mca norm
+all : mle ngsLD uit mca norm comp
 
 # Pairwise LD estimation simulations ---------------
 ./output/mle/mle_sims_out.csv : ./code/mle_sims.R
@@ -264,3 +264,12 @@ $(normplots) : ./code/pbnorm_flex.R
 
 .PHONY : norm
 norm: $(normplots)
+
+# Composit LD Estimation Simulations
+./output/comp/comp_sims_out.csv : ./code/comp_sims.R
+	mkdir -p ./output/comp
+	mkdir -p ./output/rout
+	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
+
+.PHONY : comp
+comp : ./output/comp/comp_sims_out.csv

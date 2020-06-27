@@ -87,7 +87,7 @@ simulatoins.
     ```
 
 You may choose to run only part of the simulations `make mle`, `make
-ngsLD`, or `make uit`.
+ngsLD`, `make uit`, `make mca`, `make norm`, or `make comp`.
 
 6.  Get coffee/sweets. Running `make sims` should take a few hours. You
     should get some coffee\! Here is a list of some of my favorite
@@ -121,7 +121,7 @@ Note that I’ve also only tried this on Ubuntu.
 
 # Session Information
 
-    #> R version 4.0.1 (2020-06-06)
+    #> R version 4.0.2 (2020-06-22)
     #> Platform: x86_64-pc-linux-gnu (64-bit)
     #> Running under: Ubuntu 20.04 LTS
     #> 
@@ -166,12 +166,12 @@ Note that I’ve also only tried this on Ubuntu.
     #>  [4] fs_1.4.1                 rstudioapi_0.11          remotes_2.1.1           
     #>  [7] bit64_0.9-7              AnnotationDbi_1.50.0     fansi_0.4.1             
     #> [10] lubridate_1.7.9          xml2_1.3.2               codetools_0.2-16        
-    #> [13] splines_4.0.1            knitr_1.29               pkgload_1.1.0           
-    #> [16] jsonlite_1.6.1           broom_0.5.6              cluster_2.1.0           
-    #> [19] dbplyr_1.4.4             compiler_4.0.1           httr_1.4.1              
+    #> [13] splines_4.0.2            knitr_1.29               pkgload_1.1.0           
+    #> [16] jsonlite_1.7.0           broom_0.5.6              cluster_2.1.0           
+    #> [19] dbplyr_1.4.4             compiler_4.0.2           httr_1.4.1              
     #> [22] backports_1.1.8          assertthat_0.2.1         Matrix_1.2-18           
     #> [25] cli_2.0.2                htmltools_0.5.0          prettyunits_1.1.1       
-    #> [28] tools_4.0.1              gtable_0.3.0             glue_1.4.1              
+    #> [28] tools_4.0.2              gtable_0.3.0             glue_1.4.1              
     #> [31] GenomeInfoDbData_1.2.3   rappdirs_0.3.1           cellranger_1.1.0        
     #> [34] vctrs_0.3.1              ape_5.4                  nlme_3.1-147            
     #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.15               
@@ -189,7 +189,7 @@ Note that I’ve also only tried this on Ubuntu.
     #> [73] DBI_1.1.0                pillar_1.4.4             haven_2.3.1             
     #> [76] withr_2.2.0              mgcv_1.8-31              RCurl_1.98-1.2          
     #> [79] modelr_0.1.8             crayon_1.3.4             BiocFileCache_1.12.0    
-    #> [82] rmarkdown_2.3            progress_1.2.2           grid_4.0.1              
+    #> [82] rmarkdown_2.3            progress_1.2.2           grid_4.0.2              
     #> [85] readxl_1.3.1             blob_1.2.1               callr_3.4.3             
     #> [88] vegan_2.5-6              reprex_0.3.0             digest_0.6.25           
     #> [91] openssl_1.4.1            munsell_0.5.0            viridisLite_0.3.0       

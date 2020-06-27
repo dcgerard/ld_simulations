@@ -11,8 +11,8 @@ ld_comp_genolike <- readRDS("./output/uit/ldest_comp_genolike.RDS")
 ld_comp_genolike_flex <- readRDS("./output/uit/ldest_comp_genolike_flex.RDS")
 
 pdf(file = "./output/uit/uit_fig/heat_hap_geno.pdf",
-    height = 6,
-    width = 6,
+    height = 3,
+    width = 3,
     family = "Times")
 plot(ld_hap_geno,
      element = "r2",
@@ -20,8 +20,8 @@ plot(ld_hap_geno,
 dev.off()
 
 pdf(file = "./output/uit/uit_fig/heat_hap_genolike.pdf",
-    height = 6,
-    width = 6,
+    height = 3,
+    width = 3,
     family = "Times")
 plot(ld_hap_genolike,
      element = "r2",
@@ -29,8 +29,8 @@ plot(ld_hap_genolike,
 dev.off()
 
 pdf(file = "./output/uit/uit_fig/heat_comp_geno.pdf",
-    height = 6,
-    width = 6,
+    height = 3,
+    width = 3,
     family = "Times")
 plot(ld_comp_geno,
      element = "r2",
@@ -38,8 +38,8 @@ plot(ld_comp_geno,
 dev.off()
 
 pdf(file = "./output/uit/uit_fig/heat_comp_genolike_flex.pdf",
-    height = 6,
-    width = 6,
+    height = 3,
+    width = 3,
     family = "Times")
 plot(ld_comp_genolike_flex,
      element = "r2",
@@ -47,8 +47,8 @@ plot(ld_comp_genolike_flex,
 dev.off()
 
 pdf(file = "./output/uit/uit_fig/heat_comp_genolike.pdf",
-    height = 6,
-    width = 6,
+    height = 3,
+    width = 3,
     family = "Times")
 plot(ld_comp_genolike,
      element = "r2",

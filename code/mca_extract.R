@@ -8,8 +8,8 @@ anodf <- read.csv("./data/gerardii/McAllister_Miller_Locality_Ploidy_Info.csv")
 fl <-"./data/gerardii/McAllister.Miller.all.mergedRefGuidedSNPs.vcf.gz"
 
 ## choose arbitrary region
-chlist <- list(chr1_gr = GRanges("1", IRanges(start = 4000000, end = 4200000)),
-               chr2_gr = GRanges("10", IRanges(start = 4000000, end = 4200000)))
+chlist <- list(chr1_gr = GRanges("1", IRanges(start = 7000000, end = 7100000)),
+               chr2_gr = GRanges("10", IRanges(start = 7000000, end = 7100000)))
 
 compressVcf <- bgzip(fl, tempfile())
 idx <- indexTabix(compressVcf, "vcf")

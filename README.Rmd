@@ -109,7 +109,7 @@ lapply(pkgvec, require, character.only = TRUE)
     make
     ```
   
-  You may choose to run only part of the simulations `make mle`, `make ngsLD`, or `make uit`.
+  You may choose to run only part of the simulations `make mle`, `make ngsLD`, `make uit`, `make mca`, `make norm`, or `make comp`.
 
 6. Get coffee/sweets. Running `make sims` should take a few hours. You should get 
    some coffee! Here is a list of some of my favorite places:
