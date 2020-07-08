@@ -104,7 +104,7 @@ simdf %>%
                           dprime = "D-prime",
                           r2 = "r-squared",
                           z = "z")) %>%
-  ggplot(aes(x = se, y = meanse, color = depth)) +
+  ggplot(aes(x = se, y = meanse, color = depth, shape = depth)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0) +
   theme_bw() +

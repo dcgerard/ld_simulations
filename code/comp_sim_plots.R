@@ -1,13 +1,21 @@
 library(tidyverse)
 library(ggthemes)
 library(latex2exp)
-simdf <- read_csv("./output/mle/mle_sims_out.csv")
+simdf <- read_csv("./output/comp/comp_sims_out.csv")
 
 simdf %>%
-  select(pA, pB, nind) %>%
+  mutate(mu1prop = round(mu1 / ploidy, digits = 2),
+         mu2prop = round(mu2 / ploidy, digits = 2),
+         sigma_prop = round(sigma11 / ploidy ^2, digits = 2),
+         cor = round(sigma12 / sqrt(sigma11 * sigma22), digits = 2)) ->
+  simdf
+
+simdf %>%
+  select(mu1prop, mu2prop, sigma_prop) %>%
   distinct() ->
   combodf
 
+## legend stuff
 colorvec <- ggthemes::colorblind_pal()(5)
 names(colorvec) <- c("gen", "mle", "mom", "com", "comnorm")
 labelvec_D <- c(gen = expression(hat(D)[g]),
@@ -29,12 +37,14 @@ labelvec_Dprime <- c(gen = expression(paste(hat(D), minute, {}[g])),
                      comnorm = expression(paste(hat(Delta), minute, {}[p][n])))
 
 for (index in seq_len(nrow(combodf))) {
-  pAnow <- combodf$pA[[index]]
-  pBnow <- combodf$pB[[index]]
-  nindnow <- combodf$nind[[index]]
+  mu1prop_now <- combodf$mu1prop[[index]]
+  mu2prop_now <- combodf$mu2prop[[index]]
+  sigmaprop_now <- combodf$sigma_prop[[index]]
 
   simdf %>%
-    filter(pA == pAnow, pB == pBnow, nind == nindnow) %>%
+    filter(mu1prop == mu1prop_now,
+           mu2prop == mu2prop_now,
+           sigma_prop == sigmaprop_now) %>%
     select(size,
            ploidy,
            D,
@@ -42,6 +52,7 @@ for (index in seq_len(nrow(combodf))) {
            z,
            Dprime,
            r,
+           cor,
            ends_with("D_est"),
            ends_with("r2_est"),
            ends_with("Dprime_est")) %>%
@@ -68,7 +79,7 @@ for (index in seq_len(nrow(combodf))) {
                              param == "r2" ~ r2,
                              param == "Dprime" ~ Dprime)) %>%
     mutate(truth = round(truth, digits = 2)) %>%
-    group_by(size, ploidy, method, param, truth) %>%
+    group_by(size, ploidy, method, param, truth, cor,) %>%
     summarize(bias = mean(estimate - truth, na.rm = TRUE),
               biaslow = stats::quantile(estimate - truth, probs = 0.025, na.rm = TRUE),
               biashigh = stats::quantile(estimate - truth, probs = 0.975, na.rm = TRUE),
@@ -81,7 +92,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "D") %>%
     ggplot(aes(x = size, y = bias, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -91,15 +102,15 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_D) +
     scale_linetype(labels = labelvec_D) +
     xlab("Read Depth") +
-    ylab("D Bias") ->
+    ylab(TeX("$\\Delta$ Bias")) ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/D_bias_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/D_bias_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
@@ -109,7 +120,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "D") %>%
     ggplot(aes(x = size, y = se, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -118,16 +129,16 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_D) +
     scale_linetype(labels = labelvec_D) +
     xlab("Read Depth") +
-    ylab("D Standard Error") +
+    ylab(TeX("$\\Delta$ Standard Error")) +
     scale_y_log10() ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/D_se_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/D_se_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
@@ -137,7 +148,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "D") %>%
     ggplot(aes(x = size, y = mse, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -147,15 +158,15 @@ for (index in seq_len(nrow(combodf))) {
     scale_linetype(labels = labelvec_D) +
     scale_y_log10() +
     xlab("Read Depth") +
-    ylab("D MSE") ->
+    ylab(TeX("$\\Delta$ MSE")) ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/D_mse_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/D_mse_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
@@ -166,7 +177,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "r2") %>%
     ggplot(aes(x = size, y = bias, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -176,15 +187,15 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_r) +
     scale_linetype(labels = labelvec_r) +
     xlab("Read Depth") +
-    ylab(TeX("$r^2$ Bias")) ->
+    ylab(TeX("$\\rho^2$ Bias")) ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/r2_bias_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/r2_bias_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
@@ -194,7 +205,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "r2") %>%
     ggplot(aes(x = size, y = se, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -203,16 +214,16 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_r) +
     scale_linetype(labels = labelvec_r) +
     xlab("Read Depth") +
-    ylab(TeX("$r^2$ Standard Error")) +
+    ylab(TeX("$\\rho^2$ Standard Error")) +
     scale_y_log10() ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/r2_se_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/r2_se_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
@@ -222,7 +233,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "r2") %>%
     ggplot(aes(x = size, y = mse, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -231,27 +242,29 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_r) +
     scale_linetype(labels = labelvec_r) +
     xlab("Read Depth") +
-    ylab(TeX("$r^2$ MSE")) +
+    ylab(TeX("$\\rho^2$ MSE")) +
     scale_y_log10() ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/r2_mse_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/r2_mse_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
          width = 6,
          family = "Times")
+
+
 
   ## Dprime plots --------------------------------------------------
   sumdf %>%
     filter(param == "Dprime") %>%
     ggplot(aes(x = size, y = bias, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -261,15 +274,15 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_Dprime) +
     scale_linetype(labels = labelvec_Dprime) +
     xlab("Read Depth") +
-    ylab(TeX("$D'$ Bias")) ->
+    ylab(TeX("$\\Delta'$ Bias")) ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/Dprime_bias_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/Dprime_bias_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
@@ -279,7 +292,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "Dprime") %>%
     ggplot(aes(x = size, y = se, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -288,16 +301,16 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_Dprime) +
     scale_linetype(labels = labelvec_Dprime) +
     xlab("Read Depth") +
-    ylab(TeX("$r^2$ Standard Error")) +
+    ylab(TeX("$\\Delta'$ Standard Error")) +
     scale_y_log10() ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/Dprime_se_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/Dprime_se_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,
@@ -307,7 +320,7 @@ for (index in seq_len(nrow(combodf))) {
   sumdf %>%
     filter(param == "Dprime") %>%
     ggplot(aes(x = size, y = mse, color = method, lty = method, shape = method)) +
-    facet_grid(ploidy ~ truth) +
+    facet_grid(ploidy ~ cor) +
     theme_bw() +
     theme(strip.background = element_rect(fill = "white"), legend.text.align = 0) +
     geom_line() +
@@ -316,16 +329,16 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_Dprime) +
     scale_linetype(labels = labelvec_Dprime) +
     xlab("Read Depth") +
-    ylab(TeX("$r^2$ MSE")) +
+    ylab(TeX("$\\Delta'$ MSE")) +
     scale_y_log10() ->
     pl
 
-  ggsave(filename = paste0("./output/mle_plots/Dprime_mse_nind_",
-                           nindnow,
-                           "_pA_",
-                           round(pAnow * 100),
-                           "_pB_",
-                           round(pBnow * 100),
+  ggsave(filename = paste0("./output/comp/comp_plots/Dprime_mse_mu1prop_",
+                           round(mu1prop_now * 100),
+                           "_mu2prop_",
+                           round(mu2prop_now * 100),
+                           "_sigmaprop_",
+                           round(sigmaprop_now * 100),
                            ".pdf"),
          plot = pl,
          height = 6,

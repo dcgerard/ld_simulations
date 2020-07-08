@@ -23,39 +23,21 @@ ngsprep = ./output/ngs_out/updog_format.RDS \
 mlesimplots = ./output/mle_plots/D_bias_nind_100_pA_50_pB_50.pdf \
 	      ./output/mle_plots/D_bias_nind_100_pA_50_pB_75.pdf \
 	      ./output/mle_plots/D_bias_nind_100_pA_90_pB_90.pdf \
-	      ./output/mle_plots/D_bias_nind_1000_pA_50_pB_50.pdf \
-	      ./output/mle_plots/D_bias_nind_1000_pA_50_pB_75.pdf \
-	      ./output/mle_plots/D_bias_nind_1000_pA_90_pB_90.pdf \
 	      ./output/mle_plots/D_mse_nind_100_pA_50_pB_50.pdf \
 	      ./output/mle_plots/D_mse_nind_100_pA_50_pB_75.pdf \
 	      ./output/mle_plots/D_mse_nind_100_pA_90_pB_90.pdf \
-	      ./output/mle_plots/D_mse_nind_1000_pA_50_pB_50.pdf \
-	      ./output/mle_plots/D_mse_nind_1000_pA_50_pB_75.pdf \
-	      ./output/mle_plots/D_mse_nind_1000_pA_90_pB_90.pdf \
 	      ./output/mle_plots/D_se_nind_100_pA_50_pB_50.pdf \
 	      ./output/mle_plots/D_se_nind_100_pA_50_pB_75.pdf \
 	      ./output/mle_plots/D_se_nind_100_pA_90_pB_90.pdf \
-	      ./output/mle_plots/D_se_nind_1000_pA_50_pB_50.pdf \
-	      ./output/mle_plots/D_se_nind_1000_pA_50_pB_75.pdf \
-	      ./output/mle_plots/D_se_nind_1000_pA_90_pB_90.pdf \
 	      ./output/mle_plots/r2_bias_nind_100_pA_50_pB_50.pdf \
 	      ./output/mle_plots/r2_bias_nind_100_pA_50_pB_75.pdf \
 	      ./output/mle_plots/r2_bias_nind_100_pA_90_pB_90.pdf \
-	      ./output/mle_plots/r2_bias_nind_1000_pA_50_pB_50.pdf \
-	      ./output/mle_plots/r2_bias_nind_1000_pA_50_pB_75.pdf \
-	      ./output/mle_plots/r2_bias_nind_1000_pA_90_pB_90.pdf \
 	      ./output/mle_plots/r2_mse_nind_100_pA_50_pB_50.pdf \
 	      ./output/mle_plots/r2_mse_nind_100_pA_50_pB_75.pdf \
 	      ./output/mle_plots/r2_mse_nind_100_pA_90_pB_90.pdf \
-	      ./output/mle_plots/r2_mse_nind_1000_pA_50_pB_50.pdf \
-	      ./output/mle_plots/r2_mse_nind_1000_pA_50_pB_75.pdf \
-	      ./output/mle_plots/r2_mse_nind_1000_pA_90_pB_90.pdf \
 	      ./output/mle_plots/r2_se_nind_100_pA_50_pB_50.pdf \
 	      ./output/mle_plots/r2_se_nind_100_pA_50_pB_75.pdf \
 	      ./output/mle_plots/r2_se_nind_100_pA_90_pB_90.pdf \
-	      ./output/mle_plots/r2_se_nind_1000_pA_50_pB_50.pdf \
-	      ./output/mle_plots/r2_se_nind_1000_pA_50_pB_75.pdf \
-	      ./output/mle_plots/r2_se_nind_1000_pA_90_pB_90.pdf
 
 # Plots looking at accuracy of standard errors and qq-plots for normality
 mleqqplots = ./output/mle_se_plots/qq_nind100_pA50_pB50_r0.pdf \
@@ -139,7 +121,69 @@ mcaplots = ./output/mca/mca_plots/heat_mca_comp_geno.pdf \
            ./output/mca/mca_plots/shrink_mca_hap_geno.pdf \
            ./output/mca/mca_plots/shrink_mca_hap_genolike.pdf
 
-all : mle ngsLD uit mca norm comp
+# Output of composite normal sims
+compplots = ./output/comp/comp_plots/D_bias_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_bias_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_bias_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_bias_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_bias_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_bias_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_mse_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_mse_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_mse_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_mse_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_mse_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_mse_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_se_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_se_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_se_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_se_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/D_se_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/D_se_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_bias_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_bias_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_bias_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_bias_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_bias_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_bias_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_mse_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_mse_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_mse_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_mse_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_mse_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_mse_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_se_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_se_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_se_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_se_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/Dprime_se_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/Dprime_se_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_bias_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_bias_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_bias_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_bias_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_bias_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_bias_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_mse_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_mse_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_mse_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_mse_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_mse_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_mse_mu1prop_90_mu2prop_90_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_se_mu1prop_50_mu2prop_50_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_se_mu1prop_50_mu2prop_50_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_se_mu1prop_50_mu2prop_75_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_se_mu1prop_50_mu2prop_75_sigmaprop_25.pdf \
+            ./output/comp/comp_plots/r2_se_mu1prop_90_mu2prop_90_sigmaprop_100.pdf \
+            ./output/comp/comp_plots/r2_se_mu1prop_90_mu2prop_90_sigmaprop_25.pdf
+
+# plots showing difference between D' and Delta'_g
+ddiffplots = ./output/dprime_v_dprimeg/dprimediff_2.pdf \
+             ./output/dprime_v_dprimeg/dprimediff_4.pdf \
+             ./output/dprime_v_dprimeg/dprimediff_6.pdf \
+             ./output/dprime_v_dprimeg/dprimediff_8.pdf
+
+all : mle ngsLD uit mca norm comp ddiff
 
 # Pairwise LD estimation simulations ---------------
 ./output/mle/mle_sims_out.csv : ./code/mle_sims.R
@@ -265,11 +309,26 @@ $(normplots) : ./code/pbnorm_flex.R
 .PHONY : norm
 norm: $(normplots)
 
-# Composit LD Estimation Simulations
+# Composite LD Estimation Simulations
 ./output/comp/comp_sims_out.csv : ./code/comp_sims.R
 	mkdir -p ./output/comp
 	mkdir -p ./output/rout
 	$(rexec) '--args nc=$(nc)' $< ./output/rout/$(basename $(notdir $<)).Rout
 
+$(compplots) : ./code/comp_sim_plots.R ./output/comp/comp_sims_out.csv
+	mkdir -p ./output/comp
+	mkdir -p ./output/comp/comp_plots
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
 .PHONY : comp
-comp : ./output/comp/comp_sims_out.csv
+comp : $(compplots)
+
+# Comparing D' and Delta'_g
+$(ddiffplots) : ./code/Dprime_vs_Dprimeg.R
+	mkdir -p ./output/dprime_v_dprimeg
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+.PHONY : ddiff
+ddiff : $(ddiffplots)
