@@ -13,8 +13,7 @@ If you find a bug, please create an
 
 ## Instructions
 
-You’ll need to have up-to-date versions of R and python3 to run these
-simulatoins.
+You’ll need to have an up-to-date version of R to run these simulations.
 
 1.  Install the appropriate R packages
     
@@ -54,8 +53,7 @@ simulatoins.
       - <https://doi.org/10.1371/journal.pone.0062355.s010>
     
     You can do this with the following bash code from the top directory
-    of the ld\_simulations
-    repo.
+    of the ld\_simulations repo.
     
     ``` bash
     wget --directory-prefix=data -nc https://doi.org/10.1371/journal.pone.0062355.s004
@@ -74,23 +72,50 @@ simulatoins.
     and extract the files for you.
 
 4.  Download the data from McAllister and Miller (2016)
-    <https://doi.org/10.5061/dryad.05qs7> and unzip it. I unzipped using
-    7z:
+    <https://doi.org/10.5061/dryad.05qs7> and unzip it to the
+    ./data/gerardii directory. I unzipped using 7z:
     
     ``` bash
     7z e doi_10.5061_dryad.05qs7__v1.zip 
     ```
 
-5.  Run `make`. This will run all of the simulations.
+5.  Your data directory should now look like this:
+    
+        ./data/CSV-file S1 - Sequence variants filtered DP15.csv
+        ./data/gerardii/doi_10.5061_dryad.05qs7__v1.zip
+        ./data/gerardii/McAllister.Miller.all.mergedRefGuidedSNPs.vcf.gz
+        ./data/gerardii/McAllister.Miller.all.mergedUNEAKSNPs.vcf.gz
+        ./data/gerardii/McAllister_et_al_2017_Data_from _Single_nucleotide_polymorphism.pdf
+        ./data/gerardii/McAllister_Miller_Locality_Ploidy_Info.csv
+        ./data/journal.pone.0062355.s004.gz
+        ./data/journal.pone.0062355.s007.gz
+        ./data/journal.pone.0062355.s009.xls
+        ./data/journal.pone.0062355.s010.xls
+        ./data/NewPlusOldCalls.headed.vcf
+        ./data/Workbook
+
+6.  Run `make`. This will run all of the analyses.
     
     ``` bash
     make
     ```
+    
+    You may choose to run only part of the analyses via:
+    
+      - `make mle`: Simulations under HWE.
+      - `make comp`: Simulations under violations from HWE.
+      - `make norm`: Visualizing the proportional bivariate normal
+        distribution.
+      - `make ngsLD`: Verifying that
+        [`ldsep`](https://cran.r-project.org/package=ldsep) and
+        [`ngsLD`](https://github.com/fgvieira/ngsLD) (Fox et al. 2019)
+        provide the same results in diploids.
+      - `make uit`: Real-data analysis using the data from Uitdewilligen
+        (2013).
+      - `make mca`: Real-data analysis using the data from McAllister
+        and Miller (2016).
 
-You may choose to run only part of the simulations `make mle`, `make
-ngsLD`, `make uit`, `make mca`, `make norm`, or `make comp`.
-
-6.  Get coffee/sweets. Running `make sims` should take a few hours. You
+7.  Get coffee/sweets. Running `make sims` should take a few hours. You
     should get some coffee\! Here is a list of some of my favorite
     places:
     
@@ -123,27 +148,24 @@ Note that I’ve also only tried this on Ubuntu.
 # Session Information
 
     #> R version 4.0.2 (2020-06-22)
-    #> Platform: x86_64-pc-linux-gnu (64-bit)
-    #> Running under: Ubuntu 20.04 LTS
+    #> Platform: x86_64-w64-mingw32/x64 (64-bit)
+    #> Running under: Windows 10 x64 (build 18363)
     #> 
     #> Matrix products: default
-    #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
-    #> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
     #> 
     #> locale:
-    #>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-    #>  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-    #>  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-    #>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-    #>  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-    #> [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+    #> [1] LC_COLLATE=English_United States.1252 
+    #> [2] LC_CTYPE=English_United States.1252   
+    #> [3] LC_MONETARY=English_United States.1252
+    #> [4] LC_NUMERIC=C                          
+    #> [5] LC_TIME=English_United States.1252    
     #> 
     #> attached base packages:
     #> [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
     #> [8] methods   base     
     #> 
     #> other attached packages:
-    #>  [1] ldsep_0.0.0.9005            updog_2.0.1                
+    #>  [1] ldsep_0.0.0.9004            updog_2.0.1                
     #>  [3] VariantAnnotation_1.34.0    Rsamtools_2.4.0            
     #>  [5] Biostrings_2.56.0           XVector_0.28.0             
     #>  [7] SummarizedExperiment_1.18.1 DelayedArray_0.14.0        
@@ -169,13 +191,13 @@ Note that I’ve also only tried this on Ubuntu.
     #>  [7] bit64_0.9-7              AnnotationDbi_1.50.1     fansi_0.4.1             
     #> [10] lubridate_1.7.9          xml2_1.3.2               codetools_0.2-16        
     #> [13] splines_4.0.2            knitr_1.29               pkgload_1.1.0           
-    #> [16] jsonlite_1.7.0           broom_0.5.6              cluster_2.1.0           
+    #> [16] jsonlite_1.7.0           broom_0.7.0              cluster_2.1.0           
     #> [19] dbplyr_1.4.4             compiler_4.0.2           httr_1.4.1              
     #> [22] backports_1.1.8          assertthat_0.2.1         Matrix_1.2-18           
     #> [25] cli_2.0.2                htmltools_0.5.0          prettyunits_1.1.1       
     #> [28] tools_4.0.2              gtable_0.3.0             glue_1.4.1              
     #> [31] GenomeInfoDbData_1.2.3   rappdirs_0.3.1           cellranger_1.1.0        
-    #> [34] vctrs_0.3.1              ape_5.4                  nlme_3.1-147            
+    #> [34] vctrs_0.3.1              ape_5.4                  nlme_3.1-148            
     #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.15               
     #> [40] ps_1.3.3                 testthat_2.3.2           rvest_0.3.5             
     #> [43] lifecycle_0.2.0          XML_3.99-0.4             MASS_7.3-51.6           
@@ -183,7 +205,7 @@ Note that I’ve also only tried this on Ubuntu.
     #> [49] hms_0.5.3                curl_4.3                 yaml_2.2.1              
     #> [52] memoise_1.1.0            biomaRt_2.44.1           RSQLite_2.2.0           
     #> [55] stringi_1.4.6            desc_1.2.0               permute_0.9-5           
-    #> [58] GenomicFeatures_1.40.0   BiocParallel_1.22.0      pkgbuild_1.0.8          
+    #> [58] GenomicFeatures_1.40.1   BiocParallel_1.22.0      pkgbuild_1.0.8          
     #> [61] rlang_0.4.6              pkgconfig_2.0.3          bitops_1.0-6            
     #> [64] evaluate_0.14            lattice_0.20-41          GenomicAlignments_1.24.0
     #> [67] bit_1.1-15.2             processx_3.4.3           tidyselect_1.1.0        
@@ -231,8 +253,7 @@ Population Genetic Structure and Recurrent Polyploidization in
 
 Uitdewilligen, Anne-Marie A. AND D’hoop, Jan G. A. M. L. AND Wolters.
 2013. “A Next-Generation Sequencing Method for Genotyping-by-Sequencing
-of Highly Heterozygous Autotetraploid Potato.” *PLOS ONE* 8 (5). Public
-Library of Science: 1–14.
+of Highly Heterozygous Autotetraploid Potato.” *PLOS ONE* 8 (5): 1–14.
 <https://doi.org/10.1371/journal.pone.0062355>.
 
 </div>

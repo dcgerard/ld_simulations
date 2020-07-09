@@ -25,7 +25,7 @@ If you find a bug, please create an
 
 ## Instructions
 
-You'll need to have up-to-date versions of R and python3 to run these simulatoins.
+You'll need to have an up-to-date version of R to run these simulations.
     
 1. Install the appropriate R packages
     ```{r, eval = FALSE}
@@ -99,22 +99,34 @@ lapply(pkgvec, require, character.only = TRUE)
     
     As long as you have 7z installed, `make` will attempt to download and extract the files for you.
     
-4. Download the data from @mcallister2016single <https://doi.org/10.5061/dryad.05qs7> and unzip it. I unzipped using 7z:
+4. Download the data from @mcallister2016single <https://doi.org/10.5061/dryad.05qs7> and unzip it to the ./data/gerardii directory. I unzipped using 7z:
     
     ``` bash
     7z e doi_10.5061_dryad.05qs7__v1.zip 
     ```
+    
+5. Your data directory should now look like this:
 
-5. Run `make`. This will run all of the simulations.
+    ```{r, echo = FALSE, comment=""}
+    writeLines(list.files("./data", recursive = TRUE, full.names = TRUE))
+    ```
+
+6. Run `make`. This will run all of the analyses.
 
     ``` bash
     make
     ```
   
-  You may choose to run only part of the simulations `make mle`, `make ngsLD`, `make uit`, `make mca`, `make norm`, or `make comp`.
+    You may choose to run only part of the analyses via:
+    
+    - `make mle`: Simulations under HWE.
+    - `make comp`: Simulations under violations from HWE.
+    - `make norm`: Visualizing the proportional bivariate normal distribution.
+    - `make ngsLD`: Verifying that [`ldsep`](https://cran.r-project.org/package=ldsep) and [`ngsLD`](https://github.com/fgvieira/ngsLD) [@fox2019ngsld] provide the same results in diploids.
+    - `make uit`: Real-data analysis using the data from @uitdewilligen2013next.
+    - `make mca`: Real-data analysis using the data from @mcallister2016single.
 
-6. Get coffee/sweets. Running `make sims` should take a few hours. You should get 
-   some coffee! Here is a list of some of my favorite places:
+7. Get coffee/sweets. Running `make sims` should take a few hours. You should get some coffee! Here is a list of some of my favorite places:
 
     - Washington, DC
         - [Colony Club](https://www.yelp.com/biz/colony-club-washington)
