@@ -17,7 +17,7 @@ simdf %>%
   ungroup() %>%
   mutate(`n and depth` = as.character(size == 1 & nind == 100),
          `n and depth` = recode(`n and depth`,
-                                `TRUE` = "n = 100, depth = 1",
+                                `TRUE` = "n = 100,\ndepth = 1",
                                 `FALSE` = "other")) %>%
   gather(starts_with("se"), starts_with("meanse"), key = "type_measure", value = "value") %>%
   separate(col = "type_measure", into = c("type", "measure")) %>%
@@ -32,15 +32,16 @@ simdf %>%
   geom_abline(slope = 1, intercept = 0) +
   theme_bw() +
   xlab("True Standard Error") +
-  ylab("Median of Estimated Standard Errors") +
+  ylab("Median of Estimated\nStandard Errors") +
   scale_color_colorblind() +
   facet_wrap(~measure,
-             scales = "free") +
-  theme(strip.background = element_rect(fill = "white")) ->
+             scales = "free", nrow = 1) +
+  theme(strip.background = element_rect(fill = "white"),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) ->
   pl
 
 ggsave(filename = "./output/mle_se_plots/mle_se_est.pdf",
-       plot = pl, height = 4, width = 6, family = "Times")
+       plot = pl, height = 1.8, width = 6.5, family = "Times")
 
 simdf %>%
   filter(nind == 100,
@@ -109,12 +110,14 @@ simdf %>%
   geom_abline(slope = 1, intercept = 0) +
   theme_bw() +
   xlab("True Standard Error") +
-  ylab("Median of Estimated Standard Errors") +
+  ylab("Median of Estimated\nStandard Errors") +
   scale_color_colorblind() +
   facet_wrap(~measure,
-             scales = "free") +
-  theme(strip.background = element_rect(fill = "white")) ->
+             scales = "free",
+             nrow = 1) +
+  theme(strip.background = element_rect(fill = "white"),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) ->
   pl
 
 ggsave(filename = "./output/mle_se_plots/comnorm_se_est.pdf",
-       plot = pl, height = 4, width = 4.5, family = "Times")
+       plot = pl, height = 1.8, width = 6.5, family = "Times")

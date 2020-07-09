@@ -76,7 +76,8 @@ uitfig = ./output/uit/uit_fig/heat_comp_geno.pdf \
          ./output/uit/uit_fig/uit_pairs.pdf \
          ./output/uit/uit_fig/diff11.pdf \
          ./output/uit/uit_fig/diff22.pdf \
-         ./output/uit/uit_fig/box12.pdf
+         ./output/uit/uit_fig/box12.pdf \
+         ./output/uit/uit_fig/uit_box_combo.pdf
 
 # Properties of Uitdewilligen SNPs
 uitprop = ./output/uit/uit_fig/maf.pdf \
@@ -201,8 +202,13 @@ $(mleqqplots) : ./code/mle_sim_se_plots.R ./output/mle/mle_sims_out.csv
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
+./output/mle_plots/mle_time.pdf : ./code/mle_time.R ./output/mle/mle_sims_out.csv
+	mkdir -p ./output/mle_plots
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
 .PHONY : mle
-mle : $(mlesimplots) $(mleqqplots)
+mle : $(mlesimplots) $(mleqqplots) ./output/mle_plots/mle_time.pdf
 
 
 # Comparing ngsLD to ldsep --------------------
@@ -321,8 +327,14 @@ $(compplots) : ./code/comp_sim_plots.R ./output/comp/comp_sims_out.csv
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
+./output/comp/comp_plots/comp_time.pdf : ./code/comp_time.R ./output/comp/comp_sims_out.csv
+	mkdir -p ./output/comp
+	mkdir -p ./output/comp/comp_plots
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
 .PHONY : comp
-comp : $(compplots)
+comp : $(compplots) ./output/comp/comp_plots/comp_time.pdf
 
 # Comparing D' and Delta'_g
 $(ddiffplots) : ./code/Dprime_vs_Dprimeg.R

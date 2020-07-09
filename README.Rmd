@@ -32,6 +32,7 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
     install.packages("BiocManager")
     BiocManager::install(c("tidyverse",
                            "ggthemes",
+                           "gridExtra",
                            "latex2exp",
                            "Rcpp",
                            "RcppArmadillo",
@@ -49,6 +50,7 @@ You'll need to have up-to-date versions of R and python3 to run these simulatoin
 pkgvec <- c("BiocManager", 
             "tidyverse",
             "ggthemes",
+            "gridExtra",
             "latex2exp",
             "Rcpp",
             "RcppArmadillo",

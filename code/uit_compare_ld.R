@@ -1,6 +1,8 @@
 library(ldsep)
 library(tidyverse)
 library(GGally)
+library(gridExtra)
+library(latex2exp)
 
 uit_info <- read_csv("./output/uit/uit_suc.csv")
 
@@ -55,11 +57,18 @@ plot(ld_comp_genolike,
      title = "")
 dev.off()
 
-ld_df <- tibble(`Haplotypic, Posterior\nMode Genotypes` = ld_hap_geno$r2,
-                `Haplotypic, Genotype\nLikelihoods` = ld_hap_genolike$r2,
-                `Composite, Posterior\nMean Genotypes` = ld_comp_geno$r2,
-                `Composite,\nGeneral Categorical` = ld_comp_genolike_flex$r2,
-                `Composite,\nProportional Normal` = ld_comp_genolike$r2)
+ld_df <- tibble(hap_geno = ld_hap_geno$r2,
+                hap_genolike = ld_hap_genolike$r2,
+                comp_geno = ld_comp_geno$r2,
+                comp_genolike = ld_comp_genolike_flex$r2,
+                comp_genolike_norm = ld_comp_genolike$r2)
+names(ld_df) <- c(
+  as.character(expression(paste(hat(r)^2, {}[g]))),
+  as.character(expression(paste(hat(r)^2, {}[g][l]))),
+  as.character(expression(paste(hat(rho)^2, {}[m][o][m]))),
+  as.character(expression(paste(hat(rho)^2, {}[g][c]))),
+  as.character(expression(paste(hat(rho)^2, {}[p][n])))
+)
 
 my_hist <- function(data, mapping, ...) {
   ggplot(data = data, mapping = mapping) +
@@ -75,9 +84,11 @@ my_point <- function(data, mapping, ...) {
 ggpairs(ld_df,
         lower = list(continuous = my_point),
         diag = list(continuous = my_hist),
-        upper = "blank") +
+        upper = "blank",
+        labeller = label_parsed) +
   theme_bw() +
-  theme(strip.background = element_rect(fill = "white")) ->
+  theme(strip.background = element_rect(fill = "white"),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) ->
   pl
 
 ggsave(filename = "./output/uit/uit_fig/uit_pairs.pdf",
@@ -128,20 +139,34 @@ df11 <- data.frame(hap_geno = ldmat11_hap_geno[upper.tri(ldmat11_hap_geno)],
                    comp_geno = ldmat11_comp_geno[upper.tri(ldmat11_comp_geno)],
                    comp_genolike_flex = ldmat11_comp_genolike_flex[upper.tri(ldmat11_comp_genolike_flex)],
                    comp_genolike = ldmat11_comp_genolike[upper.tri(ldmat11_comp_genolike)])
+
 df11 %>%
-  transmute(`Haplotypic, Posterior\nMode Genotypes` = comp_genolike - hap_geno,
-            `Haplotypic, Genotype\nLikelihoods` = comp_genolike - hap_genolike,
-            `Composite, Posterior\nMean Genotypes` = comp_genolike - comp_geno,
-            `Composite,\nGeneral Categorical` = comp_genolike - comp_genolike_flex) %>%
+  transmute(hap_geno = comp_genolike - hap_geno,
+            hap_genolike = comp_genolike - hap_genolike,
+            comp_geno = comp_genolike - comp_geno,
+            comp_genolike_flex = comp_genolike - comp_genolike_flex) %>%
   gather(key = "Estimator", value = "Difference") %>%
+  mutate(Estimator = parse_factor(Estimator,
+                                  levels = c("hap_geno",
+                                             "hap_genolike",
+                                             "comp_geno",
+                                             "comp_genolike_flex"))) %>%
   ggplot() +
-  geom_boxplot(aes(x = Estimator, y = Difference)) +
+  geom_boxplot(aes(x = Estimator, y = Difference), outlier.size = 0.3) +
+  scale_x_discrete(labels = c(
+    hap_geno = expression(paste(hat(r)^2, {}[g])),
+    hap_genolike = expression(paste(hat(r)^2, {}[g][l])),
+    comp_geno = expression(paste(hat(rho)^2, {}[m][o][m])),
+    comp_genolike_flex = expression(paste(hat(rho)^2, {}[g][c]))
+  )) +
   geom_hline(yintercept = 0, lty = 2, col = 2) +
-  theme_bw() ->
-  pl
+  theme_bw() +
+  ylab(TeX("$\\hat{\\rho}^2_{pn}$ - Estimator")) +
+  ggtitle("(A)") ->
+  pl1
 
 ggsave(filename = "./output/uit/uit_fig/diff11.pdf",
-       plot = pl,
+       plot = pl1,
        height = 3,
        width = 6,
        family = "Times")
@@ -153,39 +178,74 @@ df22 <- data.frame(hap_geno = ldmat22_hap_geno[upper.tri(ldmat22_hap_geno)],
                    comp_genolike_flex = ldmat22_comp_genolike_flex[upper.tri(ldmat22_comp_genolike_flex)],
                    comp_genolike = ldmat22_comp_genolike[upper.tri(ldmat22_comp_genolike)])
 df22 %>%
-  transmute(`Haplotypic, Posterior\nMode Genotypes` = comp_genolike - hap_geno,
-            `Haplotypic, Genotype\nLikelihoods` = comp_genolike - hap_genolike,
-            `Composite, Posterior\nMean Genotypes` = comp_genolike - comp_geno,
-            `Composite,\nGeneral Categorical` = comp_genolike - comp_genolike_flex) %>%
+  transmute(hap_geno = comp_genolike - hap_geno,
+            hap_genolike = comp_genolike - hap_genolike,
+            comp_geno = comp_genolike - comp_geno,
+            comp_genolike_flex = comp_genolike - comp_genolike_flex) %>%
   gather(key = "Estimator", value = "Difference") %>%
+  mutate(Estimator = parse_factor(Estimator,
+                                  levels = c("hap_geno",
+                                             "hap_genolike",
+                                             "comp_geno",
+                                             "comp_genolike_flex"))) %>%
   ggplot() +
-  geom_boxplot(aes(x = Estimator, y = Difference)) +
+  geom_boxplot(aes(x = Estimator, y = Difference), outlier.size = 0.3) +
+  scale_x_discrete(labels = c(
+    hap_geno = expression(paste(hat(r)^2, {}[g])),
+    hap_genolike = expression(paste(hat(r)^2, {}[g][l])),
+    comp_geno = expression(paste(hat(rho)^2, {}[m][o][m])),
+    comp_genolike_flex = expression(paste(hat(rho)^2, {}[g][c]))
+  )) +
   geom_hline(yintercept = 0, lty = 2, col = 2) +
-  theme_bw() ->
-  pl
+  theme_bw() +
+  ylab(TeX("$\\hat{\\rho}^2_{pn}$ - Estimator")) +
+  ggtitle("(B)")  ->
+  pl2
 
 ggsave(filename = "./output/uit/uit_fig/diff22.pdf",
-       plot = pl,
+       plot = pl2,
        height = 3,
        width = 6,
        family = "Times")
 
 
-df12 <- tibble(`Haplotypic,\nPosterior\nMode Genotypes` = c(ldmat12_hap_geno),
-               `Haplotypic,\nGenotype\nLikelihoods` = c(ldmat12_hap_genolike),
-               `Composite,\nPosterior\nMean Genotypes` = c(ldmat12_comp_geno),
-               `Composite,\nGeneral\nCategorical` = c(ldmat12_comp_genolike_flex),
-               `Composite,\nProportional\nNormal` = c(ldmat12_comp_genolike))
+df12 <- tibble(hap_geno = c(ldmat12_hap_geno),
+               hap_genolike = c(ldmat12_hap_genolike),
+               comp_geno = c(ldmat12_comp_geno),
+               comp_genolike_flex = c(ldmat12_comp_genolike_flex),
+               comp_genolike_norm = c(ldmat12_comp_genolike))
 df12 %>%
   gather(key = "Estimator", value = "LD") %>%
+  mutate(Estimator = parse_factor(Estimator,
+                                  levels = c("hap_geno",
+                                             "hap_genolike",
+                                             "comp_geno",
+                                             "comp_genolike_flex",
+                                             "comp_genolike_norm"))) %>%
   ggplot() +
-  geom_boxplot(aes(x = Estimator, y = LD)) +
+  geom_boxplot(aes(x = Estimator, y = LD), outlier.size = 0.3) +
+  scale_x_discrete(labels = c(
+    hap_geno = expression(paste(hat(r)^2, {}[g])),
+    hap_genolike = expression(paste(hat(r)^2, {}[g][l])),
+    comp_geno = expression(paste(hat(rho)^2, {}[m][o][m])),
+    comp_genolike_flex = expression(paste(hat(rho)^2, {}[g][c])),
+    comp_genolike_norm = expression(paste(hat(rho)^2, {}[p][n]))
+  )) +
   geom_hline(yintercept = 0, lty = 2, col = 2) +
-  theme_bw() ->
-  pl
+  theme_bw() +
+  ggtitle("(C)")  ->
+  pl3
 
 ggsave(filename = "./output/uit/uit_fig/box12.pdf",
-       plot = pl,
+       plot = pl3,
        height = 3,
        width = 6,
        family = "Times")
+
+
+pdf(file = "./output/uit/uit_fig/uit_box_combo.pdf",
+    width = 6.5,
+    height = 2.3,
+    family = "Times")
+gridExtra::grid.arrange(pl1, pl2, pl3, nrow = 1)
+dev.off()
