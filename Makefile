@@ -182,7 +182,8 @@ compplots = ./output/comp/comp_plots/D_bias_mu1prop_50_mu2prop_50_sigmaprop_100.
 ddiffplots = ./output/dprime_v_dprimeg/dprimediff_2.pdf \
              ./output/dprime_v_dprimeg/dprimediff_4.pdf \
              ./output/dprime_v_dprimeg/dprimediff_6.pdf \
-             ./output/dprime_v_dprimeg/dprimediff_8.pdf
+             ./output/dprime_v_dprimeg/dprimediff_8.pdf \
+             ./output/dprime_v_dprimeg/dprimediff_all.pdf
 
 all : mle ngsLD uit mca norm comp ddiff
 

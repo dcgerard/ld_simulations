@@ -5,6 +5,7 @@
 library(ldsep)
 library(tidyverse)
 library(latex2exp)
+library(ggthemes)
 
 nval <- 100
 Kseq <- c(2, 4, 6, 8)
@@ -47,6 +48,29 @@ for (index in seq_len(nrow(paramdf))) {
 
 paramdf <- unnest(paramdf, cols = data)
 
+
+paramdf %>%
+  mutate(pA = paste0("p[A]==", pA),
+         pB = paste0("p[B]==", pB),
+         Ploidy = as.character(K)) %>%
+  ggplot(aes(x = Dprime, y = Dprimeg, color = Ploidy, lty = Ploidy)) +
+  geom_abline(intercept = 0, slope = 1, col = 2, lty = 3) +
+  geom_line() +
+  facet_grid(pA ~ pB, labeller = label_parsed) +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white"),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  xlab(TeX("$D'$")) +
+  ylab(TeX("$\\Delta'_g$")) +
+  scale_color_colorblind() ->
+  pl
+
+ggsave(filename = paste0("./output/dprime_v_dprimeg/dprimediff_all.pdf"),
+       plot = pl,
+       width = 6,
+       height = 6,
+       family = "Times")
+
 for (i in seq_along(Kseq)) {
   Know <- Kseq[[i]]
   paramdf %>%
@@ -61,7 +85,7 @@ for (i in seq_along(Kseq)) {
           axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
     xlab(TeX("$D'$")) +
     ylab(TeX("$\\Delta'_g$")) +
-    geom_abline(intercept = 0, slope = 1, col = 2, lty = 2) ->
+    geom_abline(intercept = 0, slope = 1, col = 2, lty = 2)->
     pl
 
   ggsave(filename = paste0("./output/dprime_v_dprimeg/dprimediff_", Know, ".pdf"),
