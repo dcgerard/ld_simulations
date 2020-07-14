@@ -11,23 +11,21 @@ simdf %>%
             meanse_r2 = median(mle_r2_se, na.rm = TRUE),
             se_r2 = sd(mle_r2_est, na.rm = TRUE),
             meanse_dprime = median(mle_Dprime_se, na.rm = TRUE),
-            se_dprime = sd(mle_Dprime_est, na.rm = TRUE),
-            meanse_z = median(mle_z_se, na.rm = TRUE),
-            se_z = sd(mle_z_est, na.rm = TRUE)) %>%
+            se_dprime = sd(mle_Dprime_est, na.rm = TRUE)) %>%
   ungroup() %>%
-  mutate(`n and depth` = as.character(size == 1 & nind == 100),
-         `n and depth` = recode(`n and depth`,
-                                `TRUE` = "n = 100,\ndepth = 1",
-                                `FALSE` = "other")) %>%
+  mutate(Depth = as.character(size == 1),
+         Depth = recode(Depth,
+                                `TRUE` = "1",
+                                `FALSE` = "Other")) %>%
   gather(starts_with("se"), starts_with("meanse"), key = "type_measure", value = "value") %>%
   separate(col = "type_measure", into = c("type", "measure")) %>%
   spread(key = "type", value = "value") %>%
-  mutate(measure = recode(measure,
-                          d = "D",
-                          dprime = "D-prime",
-                          r2 = "r-squared",
-                          z = "z")) %>%
-  ggplot(aes(x = se, y = meanse, color = `n and depth`, shape = `n and depth`)) +
+  mutate(measure = parse_factor(measure, levels = c("d", "dprime", "r2")),
+         measure = recode(measure,
+                          d = "hat(D)[g][l]",
+                          dprime = "paste(hat(D), minute)[g][l]",
+                          r2 = "paste(hat(r)^2, {})[g][l]")) %>%
+  ggplot(aes(x = se, y = meanse, color = Depth, shape = Depth)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0) +
   theme_bw() +
@@ -35,13 +33,14 @@ simdf %>%
   ylab("Median of Estimated\nStandard Errors") +
   scale_color_colorblind() +
   facet_wrap(~measure,
-             scales = "free", nrow = 1) +
+             scales = "free", nrow = 1,
+             labeller = label_parsed) +
   theme(strip.background = element_rect(fill = "white"),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) ->
   pl
 
 ggsave(filename = "./output/mle_se_plots/mle_se_est.pdf",
-       plot = pl, height = 1.8, width = 6.5, family = "Times")
+       plot = pl, height = 2.2, width = 6.5, family = "Times")
 
 simdf %>%
   filter(nind == 100,
@@ -89,23 +88,21 @@ simdf %>%
             meanse_r2 = median(comnorm_r2_se, na.rm = TRUE),
             se_r2 = sd(comnorm_r2_est, na.rm = TRUE),
             meanse_dprime = median(comnorm_Dprime_se, na.rm = TRUE),
-            se_dprime = sd(comnorm_Dprime_est, na.rm = TRUE),
-            meanse_z = median(comnorm_z_se, na.rm = TRUE),
-            se_z = sd(comnorm_z_est, na.rm = TRUE)) %>%
+            se_dprime = sd(comnorm_Dprime_est, na.rm = TRUE)) %>%
   ungroup() %>%
-  mutate(depth = as.character(size == 1),
-         depth = recode(depth,
+  mutate(Depth = as.character(size == 1),
+         Depth = recode(Depth,
                         `TRUE` = "1",
                         `FALSE` = "other")) %>%
   gather(starts_with("se"), starts_with("meanse"), key = "type_measure", value = "value") %>%
   separate(col = "type_measure", into = c("type", "measure")) %>%
   spread(key = "type", value = "value") %>%
-  mutate(measure = recode(measure,
-                          d = "D",
-                          dprime = "D-prime",
-                          r2 = "r-squared",
-                          z = "z")) %>%
-  ggplot(aes(x = se, y = meanse, color = depth, shape = depth)) +
+  mutate(measure = parse_factor(measure, levels = c("d", "dprime", "r2")),
+         measure = recode(measure,
+                          d = "hat(Delta)[p][n]",
+                          dprime = "paste(hat(Delta), minute, {}[p][n])",
+                          r2 = "paste(hat(rho)^2, {}[p][n])")) %>%
+  ggplot(aes(x = se, y = meanse, color = Depth, shape = Depth)) +
   geom_point() +
   geom_abline(slope = 1, intercept = 0) +
   theme_bw() +
@@ -114,10 +111,11 @@ simdf %>%
   scale_color_colorblind() +
   facet_wrap(~measure,
              scales = "free",
-             nrow = 1) +
+             nrow = 1,
+             labeller = label_parsed) +
   theme(strip.background = element_rect(fill = "white"),
         axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) ->
   pl
 
 ggsave(filename = "./output/mle_se_plots/comnorm_se_est.pdf",
-       plot = pl, height = 1.8, width = 6.5, family = "Times")
+       plot = pl, height = 2.2, width = 6.5, family = "Times")

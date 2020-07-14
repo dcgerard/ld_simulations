@@ -13,7 +13,13 @@ If you find a bug, please create an
 
 ## Instructions
 
-You’ll need to have an up-to-date version of R to run these simulations.
+You will need to have R and GNU Make installed to run these simulations.
+There are other dependencies for
+[ngsLD](https://github.com/fgvieira/ngsLD) and some of the R packages I
+used. Check their documentation if you are having trouble installing
+them.
+
+Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
 
 1.  Install the appropriate R packages
     
@@ -83,10 +89,10 @@ You’ll need to have an up-to-date version of R to run these simulations.
     
         ./data/CSV-file S1 - Sequence variants filtered DP15.csv
         ./data/gerardii/doi_10.5061_dryad.05qs7__v1.zip
-        ./data/gerardii/McAllister.Miller.all.mergedRefGuidedSNPs.vcf.gz
-        ./data/gerardii/McAllister.Miller.all.mergedUNEAKSNPs.vcf.gz
         ./data/gerardii/McAllister_et_al_2017_Data_from _Single_nucleotide_polymorphism.pdf
         ./data/gerardii/McAllister_Miller_Locality_Ploidy_Info.csv
+        ./data/gerardii/McAllister.Miller.all.mergedRefGuidedSNPs.vcf.gz
+        ./data/gerardii/McAllister.Miller.all.mergedUNEAKSNPs.vcf.gz
         ./data/journal.pone.0062355.s004.gz
         ./data/journal.pone.0062355.s007.gz
         ./data/journal.pone.0062355.s009.xls
@@ -106,6 +112,8 @@ You’ll need to have an up-to-date version of R to run these simulations.
       - `make comp`: Simulations under violations from HWE.
       - `make norm`: Visualizing the proportional bivariate normal
         distribution.
+      - `make ddiff`: Comparing, under HWE, D’ and the Δ’ that
+        conditions on the marginal genotype distributions.
       - `make ngsLD`: Verifying that
         [`ldsep`](https://cran.r-project.org/package=ldsep) and
         [`ngsLD`](https://github.com/fgvieira/ngsLD) (Fox et al. 2019)
@@ -143,32 +151,33 @@ You’ll need to have an up-to-date version of R to run these simulations.
           - [Stauf’s Coffee
             Roasters](https://www.yelp.com/biz/staufs-coffee-roasters-columbus-2)
 
-Note that I’ve also only tried this on Ubuntu.
-
 # Session Information
 
     #> R version 4.0.2 (2020-06-22)
-    #> Platform: x86_64-w64-mingw32/x64 (64-bit)
-    #> Running under: Windows 10 x64 (build 18363)
+    #> Platform: x86_64-pc-linux-gnu (64-bit)
+    #> Running under: Ubuntu 20.04 LTS
     #> 
     #> Matrix products: default
+    #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
+    #> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3
     #> 
     #> locale:
-    #> [1] LC_COLLATE=English_United States.1252 
-    #> [2] LC_CTYPE=English_United States.1252   
-    #> [3] LC_MONETARY=English_United States.1252
-    #> [4] LC_NUMERIC=C                          
-    #> [5] LC_TIME=English_United States.1252    
+    #>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+    #>  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+    #>  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+    #>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+    #>  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+    #> [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
     #> 
     #> attached base packages:
     #> [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
     #> [8] methods   base     
     #> 
     #> other attached packages:
-    #>  [1] ldsep_0.0.0.9004            updog_2.0.1                
+    #>  [1] ldsep_0.0.0.9005            updog_2.0.1                
     #>  [3] VariantAnnotation_1.34.0    Rsamtools_2.4.0            
     #>  [5] Biostrings_2.56.0           XVector_0.28.0             
-    #>  [7] SummarizedExperiment_1.18.1 DelayedArray_0.14.0        
+    #>  [7] SummarizedExperiment_1.18.2 DelayedArray_0.14.0        
     #>  [9] matrixStats_0.56.0          Biobase_2.48.0             
     #> [11] GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
     #> [13] IRanges_2.22.2              S4Vectors_0.26.1           
@@ -181,7 +190,7 @@ Note that I’ve also only tried this on Ubuntu.
     #> [27] ggthemes_4.2.0              forcats_0.5.0              
     #> [29] stringr_1.4.0               dplyr_1.0.0                
     #> [31] purrr_0.3.4                 readr_1.3.1                
-    #> [33] tidyr_1.1.0                 tibble_3.0.2               
+    #> [33] tidyr_1.1.0                 tibble_3.0.3               
     #> [35] ggplot2_3.3.2               tidyverse_1.3.0            
     #> [37] BiocManager_1.30.10        
     #> 
@@ -197,7 +206,7 @@ Note that I’ve also only tried this on Ubuntu.
     #> [25] cli_2.0.2                htmltools_0.5.0          prettyunits_1.1.1       
     #> [28] tools_4.0.2              gtable_0.3.0             glue_1.4.1              
     #> [31] GenomeInfoDbData_1.2.3   rappdirs_0.3.1           cellranger_1.1.0        
-    #> [34] vctrs_0.3.1              ape_5.4                  nlme_3.1-148            
+    #> [34] vctrs_0.3.1              ape_5.4                  nlme_3.1-147            
     #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.15               
     #> [40] ps_1.3.3                 testthat_2.3.2           rvest_0.3.5             
     #> [43] lifecycle_0.2.0          XML_3.99-0.4             MASS_7.3-51.6           
@@ -205,12 +214,12 @@ Note that I’ve also only tried this on Ubuntu.
     #> [49] hms_0.5.3                curl_4.3                 yaml_2.2.1              
     #> [52] memoise_1.1.0            biomaRt_2.44.1           RSQLite_2.2.0           
     #> [55] stringi_1.4.6            desc_1.2.0               permute_0.9-5           
-    #> [58] GenomicFeatures_1.40.1   BiocParallel_1.22.0      pkgbuild_1.0.8          
-    #> [61] rlang_0.4.6              pkgconfig_2.0.3          bitops_1.0-6            
+    #> [58] GenomicFeatures_1.40.1   BiocParallel_1.22.0      pkgbuild_1.1.0          
+    #> [61] rlang_0.4.7              pkgconfig_2.0.3          bitops_1.0-6            
     #> [64] evaluate_0.14            lattice_0.20-41          GenomicAlignments_1.24.0
     #> [67] bit_1.1-15.2             processx_3.4.3           tidyselect_1.1.0        
     #> [70] magrittr_1.5             R6_2.4.1                 generics_0.0.2          
-    #> [73] DBI_1.1.0                pillar_1.4.4             haven_2.3.1             
+    #> [73] DBI_1.1.0                pillar_1.4.6             haven_2.3.1             
     #> [76] withr_2.2.0              mgcv_1.8-31              RCurl_1.98-1.2          
     #> [79] modelr_0.1.8             crayon_1.3.4             BiocFileCache_1.12.0    
     #> [82] rmarkdown_2.3            progress_1.2.2           grid_4.0.2              

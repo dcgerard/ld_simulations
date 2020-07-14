@@ -25,7 +25,9 @@ If you find a bug, please create an
 
 ## Instructions
 
-You'll need to have an up-to-date version of R to run these simulations.
+You will need to have R and GNU Make installed to run these simulations. There are other dependencies for [ngsLD](https://github.com/fgvieira/ngsLD) and some of the R packages I used. Check their documentation if you are having trouble installing them.
+
+Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     
 1. Install the appropriate R packages
     ```{r, eval = FALSE}
@@ -122,6 +124,7 @@ lapply(pkgvec, require, character.only = TRUE)
     - `make mle`: Simulations under HWE.
     - `make comp`: Simulations under violations from HWE.
     - `make norm`: Visualizing the proportional bivariate normal distribution.
+    - `make ddiff`: Comparing, under HWE, D' and the Δ' that conditions on the marginal genotype distributions.
     - `make ngsLD`: Verifying that [`ldsep`](https://cran.r-project.org/package=ldsep) and [`ngsLD`](https://github.com/fgvieira/ngsLD) [@fox2019ngsld] provide the same results in diploids.
     - `make uit`: Real-data analysis using the data from @uitdewilligen2013next.
     - `make mca`: Real-data analysis using the data from @mcallister2016single.
@@ -141,9 +144,6 @@ lapply(pkgvec, require, character.only = TRUE)
     - Columbus
         - [Yeah, Me Too](https://www.yelp.com/biz/yeah-me-too-columbus)
         - [Stauf's Coffee Roasters](https://www.yelp.com/biz/staufs-coffee-roasters-columbus-2)
-
-
-Note that I've also only tried this on Ubuntu.
 
 # Session Information
 
