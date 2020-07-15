@@ -43,7 +43,9 @@ mlesimplots = ./output/mle_plots/D_bias_nind_100_pA_50_pB_50.pdf \
 mleqqplots = ./output/mle_se_plots/qq_nind100_pA50_pB50_r0.pdf \
 	     ./output/mle_se_plots/qq_nind100_pA90_pB90_r0.pdf \
              ./output/mle_se_plots/comnorm_se_est.pdf \
-             ./output/mle_se_plots/mle_se_est.pdf
+             ./output/mle_se_plots/mle_se_est.pdf \
+             ./output/mle_se_plots/like_combined_se.pdf \
+             ./output/mle_se_plots/zscore_se.pdf
 
 # Plots showing flexibility of proportional bivariate normal distribution
 normplots = ./output/compare_norm/normdist.pdf \
