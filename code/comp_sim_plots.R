@@ -84,7 +84,7 @@ for (index in seq_len(nrow(combodf))) {
               biaslow = stats::quantile(estimate - truth, probs = 0.025, na.rm = TRUE),
               biashigh = stats::quantile(estimate - truth, probs = 0.975, na.rm = TRUE),
               se = sd(estimate, na.rm = TRUE),
-              mse = mean((estimate - truth)^2), na.rm = TRUE) %>%
+              mse = mean((estimate - truth)^2, na.rm = TRUE)) %>%
     mutate(method = parse_factor(method, levels = c("gen", "mle", "mom", "com", "comnorm"))) ->
     sumdf
 
@@ -102,7 +102,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_D) +
     scale_linetype(labels = labelvec_D) +
     xlab("Read Depth") +
-    ylab(TeX("$\\Delta$ Bias")) ->
+    ylab(TeX("$\\Delta$ Bias")) +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/D_bias_mu1prop_",
@@ -130,7 +131,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_linetype(labels = labelvec_D) +
     xlab("Read Depth") +
     ylab(TeX("$\\Delta$ Standard Error")) +
-    scale_y_log10() ->
+    scale_y_log10() +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/D_se_mu1prop_",
@@ -158,7 +160,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_linetype(labels = labelvec_D) +
     scale_y_log10() +
     xlab("Read Depth") +
-    ylab(TeX("$\\Delta$ MSE")) ->
+    ylab(TeX("$\\Delta$ MSE")) +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/D_mse_mu1prop_",
@@ -187,7 +190,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_r) +
     scale_linetype(labels = labelvec_r) +
     xlab("Read Depth") +
-    ylab(TeX("$\\rho^2$ Bias")) ->
+    ylab(TeX("$\\rho^2$ Bias")) +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/r2_bias_mu1prop_",
@@ -215,7 +219,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_linetype(labels = labelvec_r) +
     xlab("Read Depth") +
     ylab(TeX("$\\rho^2$ Standard Error")) +
-    scale_y_log10() ->
+    scale_y_log10() +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/r2_se_mu1prop_",
@@ -243,7 +248,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_linetype(labels = labelvec_r) +
     xlab("Read Depth") +
     ylab(TeX("$\\rho^2$ MSE")) +
-    scale_y_log10() ->
+    scale_y_log10() +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/r2_mse_mu1prop_",
@@ -274,7 +280,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_shape(labels = labelvec_Dprime) +
     scale_linetype(labels = labelvec_Dprime) +
     xlab("Read Depth") +
-    ylab(TeX("$\\Delta'$ Bias")) ->
+    ylab(TeX("$\\Delta'$ Bias")) +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/Dprime_bias_mu1prop_",
@@ -302,7 +309,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_linetype(labels = labelvec_Dprime) +
     xlab("Read Depth") +
     ylab(TeX("$\\Delta'$ Standard Error")) +
-    scale_y_log10() ->
+    scale_y_log10() +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/Dprime_se_mu1prop_",
@@ -330,7 +338,8 @@ for (index in seq_len(nrow(combodf))) {
     scale_linetype(labels = labelvec_Dprime) +
     xlab("Read Depth") +
     ylab(TeX("$\\Delta'$ MSE")) +
-    scale_y_log10() ->
+    scale_y_log10() +
+    scale_x_log10() ->
     pl
 
   ggsave(filename = paste0("./output/comp/comp_plots/Dprime_mse_mu1prop_",
