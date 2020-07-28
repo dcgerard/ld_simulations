@@ -8,6 +8,12 @@
 This repository contains the code and instructions needed to reproduce
 all of the results from Gerard (2020).
 
+Some of the plots from the simulations mentioned in the manuscript can
+be found
+[here](https://github.com/dcgerard/ld_simulations/tree/master/output/mle_plots)
+and
+[here](https://github.com/dcgerard/ld_simulations/tree/master/output/comp/comp_plots).
+
 If you find a bug, please create an
 [issue](https://github.com/dcgerard/ld_simulations/issues).
 
@@ -155,7 +161,7 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
 
     #> R version 4.0.2 (2020-06-22)
     #> Platform: x86_64-pc-linux-gnu (64-bit)
-    #> Running under: Ubuntu 20.04 LTS
+    #> Running under: Ubuntu 20.04.1 LTS
     #> 
     #> Matrix products: default
     #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3
@@ -174,18 +180,18 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     #> [8] methods   base     
     #> 
     #> other attached packages:
-    #>  [1] ldsep_0.0.0.9005            updog_2.0.1                
+    #>  [1] ldsep_0.0.1.1               updog_2.0.2                
     #>  [3] VariantAnnotation_1.34.0    Rsamtools_2.4.0            
     #>  [5] Biostrings_2.56.0           XVector_0.28.0             
-    #>  [7] SummarizedExperiment_1.18.2 DelayedArray_0.14.0        
+    #>  [7] SummarizedExperiment_1.18.2 DelayedArray_0.14.1        
     #>  [9] matrixStats_0.56.0          Biobase_2.48.0             
     #> [11] GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
     #> [13] IRanges_2.22.2              S4Vectors_0.26.1           
     #> [15] BiocGenerics_0.34.0         vcfR_1.11.0                
-    #> [17] devtools_2.3.0              usethis_1.6.1              
+    #> [17] devtools_2.3.1              usethis_1.6.1              
     #> [19] corrplot_0.84               doParallel_1.0.15          
     #> [21] iterators_1.0.12            foreach_1.5.0              
-    #> [23] RcppArmadillo_0.9.900.1.0   Rcpp_1.0.5                 
+    #> [23] RcppArmadillo_0.9.900.2.0   Rcpp_1.0.5                 
     #> [25] latex2exp_0.4.0             gridExtra_2.3              
     #> [27] ggthemes_4.2.0              forcats_0.5.0              
     #> [29] stringr_1.4.0               dplyr_1.0.0                
@@ -196,20 +202,20 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     #> 
     #> loaded via a namespace (and not attached):
     #>  [1] colorspace_1.4-1         ellipsis_0.3.1           rprojroot_1.3-2         
-    #>  [4] fs_1.4.2                 rstudioapi_0.11          remotes_2.1.1           
-    #>  [7] bit64_0.9-7              AnnotationDbi_1.50.1     fansi_0.4.1             
+    #>  [4] fs_1.4.2                 rstudioapi_0.11          remotes_2.2.0           
+    #>  [7] bit64_0.9-7.1            AnnotationDbi_1.50.1     fansi_0.4.1             
     #> [10] lubridate_1.7.9          xml2_1.3.2               codetools_0.2-16        
     #> [13] splines_4.0.2            knitr_1.29               pkgload_1.1.0           
     #> [16] jsonlite_1.7.0           broom_0.7.0              cluster_2.1.0           
-    #> [19] dbplyr_1.4.4             compiler_4.0.2           httr_1.4.1              
+    #> [19] dbplyr_1.4.4             compiler_4.0.2           httr_1.4.2              
     #> [22] backports_1.1.8          assertthat_0.2.1         Matrix_1.2-18           
     #> [25] cli_2.0.2                htmltools_0.5.0          prettyunits_1.1.1       
     #> [28] tools_4.0.2              gtable_0.3.0             glue_1.4.1              
     #> [31] GenomeInfoDbData_1.2.3   rappdirs_0.3.1           cellranger_1.1.0        
-    #> [34] vctrs_0.3.1              ape_5.4                  nlme_3.1-147            
-    #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.15               
+    #> [34] vctrs_0.3.2              ape_5.4                  nlme_3.1-147            
+    #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.16               
     #> [40] ps_1.3.3                 testthat_2.3.2           rvest_0.3.5             
-    #> [43] lifecycle_0.2.0          XML_3.99-0.4             MASS_7.3-51.6           
+    #> [43] lifecycle_0.2.0          XML_3.99-0.5             MASS_7.3-51.6           
     #> [46] zlibbioc_1.34.0          scales_1.1.1             BSgenome_1.56.0         
     #> [49] hms_0.5.3                curl_4.3                 yaml_2.2.1              
     #> [52] memoise_1.1.0            biomaRt_2.44.1           RSQLite_2.2.0           

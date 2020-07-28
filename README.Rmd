@@ -20,6 +20,8 @@ knitr::opts_chunk$set(
 This repository contains the code and instructions needed to reproduce all of
 the results from @gerard2020pairwise.
 
+Some of the plots from the simulations mentioned in the manuscript can be found [here](https://github.com/dcgerard/ld_simulations/tree/master/output/mle_plots) and [here](https://github.com/dcgerard/ld_simulations/tree/master/output/comp/comp_plots).
+
 If you find a bug, please create an
 [issue](https://github.com/dcgerard/ld_simulations/issues).
 
