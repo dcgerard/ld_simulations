@@ -180,7 +180,7 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     #> [8] methods   base     
     #> 
     #> other attached packages:
-    #>  [1] ldsep_0.0.1.1               updog_2.0.2                
+    #>  [1] ldsep_1.0.0                 updog_2.0.2                
     #>  [3] VariantAnnotation_1.34.0    Rsamtools_2.4.0            
     #>  [5] Biostrings_2.56.0           XVector_0.28.0             
     #>  [7] SummarizedExperiment_1.18.2 DelayedArray_0.14.1        
@@ -194,16 +194,16 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     #> [23] RcppArmadillo_0.9.900.2.0   Rcpp_1.0.5                 
     #> [25] latex2exp_0.4.0             gridExtra_2.3              
     #> [27] ggthemes_4.2.0              forcats_0.5.0              
-    #> [29] stringr_1.4.0               dplyr_1.0.0                
+    #> [29] stringr_1.4.0               dplyr_1.0.1                
     #> [31] purrr_0.3.4                 readr_1.3.1                
-    #> [33] tidyr_1.1.0                 tibble_3.0.3               
+    #> [33] tidyr_1.1.1                 tibble_3.0.3               
     #> [35] ggplot2_3.3.2               tidyverse_1.3.0            
     #> [37] BiocManager_1.30.10        
     #> 
     #> loaded via a namespace (and not attached):
     #>  [1] colorspace_1.4-1         ellipsis_0.3.1           rprojroot_1.3-2         
-    #>  [4] fs_1.4.2                 rstudioapi_0.11          remotes_2.2.0           
-    #>  [7] bit64_0.9-7.1            AnnotationDbi_1.50.1     fansi_0.4.1             
+    #>  [4] fs_1.5.0                 rstudioapi_0.11          remotes_2.2.0           
+    #>  [7] bit64_4.0.2              AnnotationDbi_1.50.3     fansi_0.4.1             
     #> [10] lubridate_1.7.9          xml2_1.3.2               codetools_0.2-16        
     #> [13] splines_4.0.2            knitr_1.29               pkgload_1.1.0           
     #> [16] jsonlite_1.7.0           broom_0.7.0              cluster_2.1.0           
@@ -214,7 +214,7 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     #> [31] GenomeInfoDbData_1.2.3   rappdirs_0.3.1           cellranger_1.1.0        
     #> [34] vctrs_0.3.2              ape_5.4                  nlme_3.1-147            
     #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.16               
-    #> [40] ps_1.3.3                 testthat_2.3.2           rvest_0.3.5             
+    #> [40] ps_1.3.3                 testthat_2.3.2           rvest_0.3.6             
     #> [43] lifecycle_0.2.0          XML_3.99-0.5             MASS_7.3-51.6           
     #> [46] zlibbioc_1.34.0          scales_1.1.1             BSgenome_1.56.0         
     #> [49] hms_0.5.3                curl_4.3                 yaml_2.2.1              
@@ -223,7 +223,7 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     #> [58] GenomicFeatures_1.40.1   BiocParallel_1.22.0      pkgbuild_1.1.0          
     #> [61] rlang_0.4.7              pkgconfig_2.0.3          bitops_1.0-6            
     #> [64] evaluate_0.14            lattice_0.20-41          GenomicAlignments_1.24.0
-    #> [67] bit_1.1-15.2             processx_3.4.3           tidyselect_1.1.0        
+    #> [67] bit_4.0.3                processx_3.4.3           tidyselect_1.1.0        
     #> [70] magrittr_1.5             R6_2.4.1                 generics_0.0.2          
     #> [73] DBI_1.1.0                pillar_1.4.6             haven_2.3.1             
     #> [76] withr_2.2.0              mgcv_1.8-31              RCurl_1.98-1.2          
@@ -250,7 +250,7 @@ likelihoods.” *Bioinformatics* 35 (19): 3855–6.
 <div id="ref-gerard2020pairwise">
 
 Gerard, David. 2020. “Pairwise Linkage Disequilibrium Estimation for
-Polyploids.” *Unpublished Manuscript*.
+Polyploids.” *bioRxiv*. <https://doi.org/10.1101/2020.08.03.234476>.
 
 </div>
 
