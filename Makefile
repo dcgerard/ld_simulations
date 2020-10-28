@@ -76,14 +76,12 @@ uitfig = ./output/uit/uit_fig/heat_comp_geno.pdf \
          ./output/uit/uit_fig/heat_hap_geno.pdf \
          ./output/uit/uit_fig/heat_hap_genolike.pdf \
          ./output/uit/uit_fig/uit_pairs.pdf \
-         ./output/uit/uit_fig/diff11.pdf \
-         ./output/uit/uit_fig/diff22.pdf \
-         ./output/uit/uit_fig/box12.pdf \
-         ./output/uit/uit_fig/uit_box_combo.pdf
+         ./output/uit/uit_fig/uit_pairs_between.pdf
 
 # Properties of Uitdewilligen SNPs
 uitprop = ./output/uit/uit_fig/maf.pdf \
-          ./output/uit/uit_fig/readdepth.pdf
+          ./output/uit/uit_fig/readdepth.pdf \
+          ./output/uit/uit_fig/hwe_p_hist.pdf
 
 # Raw data from McAllister et al (2017)
 mcadat = ./data/gerardii/McAllister.Miller.all.mergedRefGuidedSNPs.vcf.gz \

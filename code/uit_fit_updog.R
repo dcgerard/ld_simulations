@@ -25,12 +25,12 @@ mout <- multidog(refmat  = refmat,
                  model   = "norm",
                  nc      = nc)
 
-mout$inddf %>%
-  group_by(snp) %>%
-  summarize(freq = mean(geno) / 4) %>%
-  filter(freq < 0.9, freq > 0.1) ->
-  keepdf
+# Filter out monoallelic SNPs
+moutsub <- filter_snp(mout, pmax(Pr_0, Pr_1, Pr_2, Pr_3, Pr_4) < 0.90)
 
-moutsub <- filter_snp(mout, snp %in% keepdf$snp)
+uitdf <- read_csv("./output/uit/uit_suc.csv")
+subuitdf <- filter(uitdf, uitdf$`Variant name` %in% moutsub$snpdf$snp)
+stopifnot(nrow(subuitdf) == nrow(moutsub$snpdf))
 
+write_csv(x = subuitdf, file = "./output/uit/subuit_suc.csv")
 saveRDS(object = moutsub, file = "./output/uit/uit_updog_fit.RDS")
