@@ -6,7 +6,7 @@ loglarray <- readRDS(file = "./output/ngs_out/updog_format.RDS")
 ldsep_time <- system.time({
   ldsep_out <- mldest(geno = loglarray,
                       nc = 1,
-                      type = "gam",
+                      type = "hap",
                       pen = 1,
                       se = FALSE)
 })

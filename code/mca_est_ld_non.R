@@ -28,7 +28,7 @@ genomat <- format_multidog(x = mout, varname = "geno")
 ld_hap_genolike <- mldest(geno = genolike_array,
                           K    = K,
                           nc   = nc,
-                          type = "gam",
+                          type = "hap",
                           se   = TRUE)
 
 saveRDS(object = ld_hap_genolike, file = "./output/mca/ldest_hap_genolike_non.RDS")
@@ -36,7 +36,7 @@ saveRDS(object = ld_hap_genolike, file = "./output/mca/ldest_hap_genolike_non.RD
 ld_hap_geno <- mldest(geno = genomat,
                       K    = K,
                       nc   = nc,
-                      type = "gam",
+                      type = "hap",
                       se   = TRUE)
 
 saveRDS(object = ld_hap_geno, file = "./output/mca/ldest_hap_geno_non.RDS")

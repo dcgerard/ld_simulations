@@ -28,7 +28,7 @@ K <- 4
 ld_hap_genolike <- mldest(geno = genolike_array,
                           K    = K,
                           nc   = nc,
-                          type = "gam",
+                          type = "hap",
                           se   = TRUE)
 
 saveRDS(object = ld_hap_genolike, file = "./output/uit/ldest_hap_genolike.RDS")
@@ -36,7 +36,7 @@ saveRDS(object = ld_hap_genolike, file = "./output/uit/ldest_hap_genolike.RDS")
 ld_hap_geno <- mldest(geno = genomat,
                       K    = K,
                       nc   = nc,
-                      type = "gam",
+                      type = "hap",
                       se   = TRUE)
 
 saveRDS(object = ld_hap_geno, file = "./output/uit/ldest_hap_geno.RDS")
