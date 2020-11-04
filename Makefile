@@ -186,12 +186,17 @@ ddiffplots = ./output/dprime_v_dprimeg/dprimediff_2.pdf \
              ./output/dprime_v_dprimeg/dprimediff_all.pdf
 
 # Plots looking at deviations from HWE caused by preferential pairing and double Reduction
-hwedevplots = ./output/ped/hwe_heatmap.pdf \
-            = ./output/ped/ped_hwe.txt \
-            = ./output/ped/hwe_violated_heatmap_dr.pdf \
-            = ./output/ped/ped_hwe_violated_dr.txt \
-            = ./output/ped/hwe_violated_heatmap_pp.pdf \
-            = ./output/ped/ped_hwe_violated_pp.txt
+hwedevplots = ./output/ped/true_r/genodist.csv \
+							./output/ped/true_r/heatmap_pp100_qq0.pdf \
+							./output/ped/true_r/heatmap_pp100_qq33.pdf \
+							./output/ped/true_r/heatmap_pp100_qq67.pdf \
+							./output/ped/true_r/heatmap_pp33_qq0.pdf \
+							./output/ped/true_r/heatmap_pp33_qq33.pdf \
+							./output/ped/true_r/heatmap_pp33_qq67.pdf \
+							./output/ped/true_r/heatmap_pp67_qq0.pdf \
+							./output/ped/true_r/heatmap_pp67_qq33.pdf \
+							./output/ped/true_r/heatmap_pp67_qq67.pdf \
+							./output/ped/true_r/true_r_list.RDS
 
 all : mle ngsLD uit mca norm comp ddiff ped
 
@@ -376,5 +381,11 @@ $(hwedevplots) : ./code/ped_dev.R ./code/ped_funs.R
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
+./output/ped/true_r/truer_scatter.pdf ./output/ped/true_r/heatmap_pp_qq.pdf : ./code/ped_plot_truer2.R $(hwedevplots)
+
 .PHONY : ped
-ped : ./output/ped/allo_auto_dist.pdf ./output/ped/ped_sim_out.csv ./output/ped/hwe_prob.txt $(hwedevplots)
+ped : ./output/ped/allo_auto_dist.pdf \
+      ./output/ped/ped_sim_out.csv \
+      ./output/ped/hwe_prob.txt $(hwedevplots) \
+      ./output/ped/true_r/truer_scatter.pdf \
+      ./output/ped/true_r/heatmap_pp_qq.pdf
