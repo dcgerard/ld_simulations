@@ -185,7 +185,15 @@ ddiffplots = ./output/dprime_v_dprimeg/dprimediff_2.pdf \
              ./output/dprime_v_dprimeg/dprimediff_8.pdf \
              ./output/dprime_v_dprimeg/dprimediff_all.pdf
 
-all : mle ngsLD uit mca norm comp ddiff
+# Plots looking at deviations from HWE caused by preferential pairing and double Reduction
+hwedevplots = ./output/ped/hwe_heatmap.pdf \
+            = ./output/ped/ped_hwe.txt \
+            = ./output/ped/hwe_violated_heatmap_dr.pdf \
+            = ./output/ped/ped_hwe_violated_dr.txt \
+            = ./output/ped/hwe_violated_heatmap_pp.pdf \
+            = ./output/ped/ped_hwe_violated_pp.txt
+
+all : mle ngsLD uit mca norm comp ddiff ped
 
 # Pairwise LD estimation simulations ---------------
 ./output/mle/mle_sims_out.csv : ./code/mle_sims.R
@@ -345,3 +353,28 @@ $(ddiffplots) : ./code/Dprime_vs_Dprimeg.R
 
 .PHONY : ddiff
 ddiff : $(ddiffplots)
+
+# Preferential Pairing and Double Reduction impacts
+
+./output/ped/allo_auto_dist.pdf : ./code/ped_visualize_allo.R
+	mkdir -p ./output/ped
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+./output/ped/hwe_prob.txt : ./code/ped_hwe.R
+	mkdir -p ./output/ped
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+./output/ped/ped_sim_out.csv : ./code/ped_sim.R ./code/ped_funs.R
+	mkdir -p ./output/ped
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(hwedevplots) : ./code/ped_dev.R ./code/ped_funs.R
+	mkdir -p ./output/ped
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+.PHONY : ped
+ped : ./output/ped/allo_auto_dist.pdf ./output/ped/ped_sim_out.csv ./output/ped/hwe_prob.txt $(hwedevplots)

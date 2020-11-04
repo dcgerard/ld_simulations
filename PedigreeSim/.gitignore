@@ -1,0 +1,10 @@
+*
+!.gitignore
+!JScience-license.txt
+!lib
+!PedigreeSim.jar
+!PedigreeSim_license.txt
+!PedigreeSim_manual.pdf
+!ReadMe.txt
+!gerard_redistribute_license.md
+!gpl-2.0.md
