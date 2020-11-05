@@ -5,6 +5,7 @@
 library(tidyverse)
 library(GGally)
 library(corrplot)
+library(xtable)
 
 pref_pair_vec <- c(1/3, 2/3, 1)
 quadprop_vec <- c(0, 1/3, 2/3)
@@ -58,3 +59,24 @@ ggsave(filename = "./output/ped/true_r/truer_scatter.pdf",
        width = 7,
        family = "Times")
 
+## Table of genotype distributions
+genodist <- read_csv("./output/ped/true_r/genodist.csv")
+
+genodist %>%
+  arrange(loc, qq, pp) %>%
+  mutate(qq = case_when(near(qq, 0) ~ "0",
+                        near(qq, 1/3) ~ "1/3",
+                        near(qq, 2/3) ~ "2/3"),
+         pp = case_when(near(pp, 1/3) ~ "1/3",
+                        near(pp, 2/3) ~ "2/3",
+                        near(pp, 1) ~ "1")) %>%
+  rename(`0` = X0,
+         `1` = X1,
+         `2` = X2,
+         `3` = X3,
+         `4` = X4,
+         `Preferential Pairing` = pp,
+         `Quadrivalent Formation` = qq,
+         `Location (cM)` = loc) %>%
+  xtable(digits = 2) %>%
+  print(include.rownames = FALSE, file = "./output/ped/true_r/genodist_tab.txt")

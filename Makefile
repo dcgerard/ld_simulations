@@ -207,6 +207,11 @@ pedsimplots = ./output/ped/simplots/diff_100_80.pdf \
               ./output/ped/simplots/diff_50_70.pdf \
               ./output/ped/simplots/true_r2_box.pdf
 
+# Plots exploring LD when we have a population size of 10000 instead of 1000
+poplargeped = ./output/ped/true_r/truer_scatter.pdf \
+              ./output/ped/true_r/heatmap_pp_qq.pdf \
+              ./output/ped/true_r/genodist_tab.txt
+
 
 all : mle ngsLD uit mca norm comp ddiff ped
 
@@ -398,7 +403,7 @@ $(pedsimplots) : ./code/ped_plot.R ./output/ped/ped_sim_out.csv
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
-./output/ped/true_r/truer_scatter.pdf ./output/ped/true_r/heatmap_pp_qq.pdf : ./code/ped_plot_truer2.R $(hwedevplots)
+$(poplargeped) : ./code/ped_plot_truer2.R $(hwedevplots)
 	mkdir -p ./output/ped
 	mkdir -p ./output/ped/true_r
 	mkdir -p ./output/rout
@@ -406,8 +411,7 @@ $(pedsimplots) : ./code/ped_plot.R ./output/ped/ped_sim_out.csv
 
 .PHONY : ped
 ped : ./output/ped/allo_auto_dist.pdf \
+      ./output/ped/hwe_prob.txt \
       $(pedsimplots) \
       $(hwedevplots) \
-      ./output/ped/hwe_prob.txt $(hwedevplots) \
-      ./output/ped/true_r/truer_scatter.pdf \
-      ./output/ped/true_r/heatmap_pp_qq.pdf
+      $(poplargeped)

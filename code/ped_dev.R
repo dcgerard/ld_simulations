@@ -108,5 +108,5 @@ for (index in seq_len(nrow(paramdf))) {
   hwe_df[index * 2 + 2, 4:8] <- prop.table(table(geno100) - 1) ## since added quasi counts
 }
 
-write.csv(x = hwe_df, file = "./output/ped/true_r/genodist.csv")
+write.csv(x = hwe_df, file = "./output/ped/true_r/genodist.csv", row.names = FALSE)
 saveRDS(object = r2_true_list, file = "./output/ped/true_r/true_r_list.RDS")
