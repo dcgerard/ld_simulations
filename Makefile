@@ -198,6 +198,15 @@ hwedevplots = ./output/ped/true_r/genodist.csv \
 							./output/ped/true_r/heatmap_pp67_qq67.pdf \
 							./output/ped/true_r/true_r_list.RDS
 
+# Plots showing results of simulation study using PedigreeSim
+pedsimplots = ./output/ped/simplots/diff_100_80.pdf \
+              ./output/ped/simplots/diff_100_90.pdf \
+              ./output/ped/simplots/diff_100_99.pdf \
+              ./output/ped/simplots/diff_50_51.pdf \
+              ./output/ped/simplots/diff_50_60.pdf \
+              ./output/ped/simplots/diff_50_70.pdf
+
+
 all : mle ngsLD uit mca norm comp ddiff ped
 
 # Pairwise LD estimation simulations ---------------
@@ -378,14 +387,26 @@ ddiff : $(ddiffplots)
 
 $(hwedevplots) : ./code/ped_dev.R ./code/ped_funs.R
 	mkdir -p ./output/ped
+	mkdir -p ./output/ped/true_r
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
+
+$(pedsimplots) : ./code/ped_plot.R ./output/ped/ped_sim_out.csv
+	mkdir -p ./output/ped
+	mkdir -p ./output/ped/true_r
 	mkdir -p ./output/rout
 	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
 ./output/ped/true_r/truer_scatter.pdf ./output/ped/true_r/heatmap_pp_qq.pdf : ./code/ped_plot_truer2.R $(hwedevplots)
+	mkdir -p ./output/ped
+	mkdir -p ./output/ped/true_r
+	mkdir -p ./output/rout
+	$(rexec) $< ./output/rout/$(basename $(notdir $<)).Rout
 
 .PHONY : ped
 ped : ./output/ped/allo_auto_dist.pdf \
-      ./output/ped/ped_sim_out.csv \
+      $(pedsimplots) \
+      $(hwedevplots) \
       ./output/ped/hwe_prob.txt $(hwedevplots) \
       ./output/ped/true_r/truer_scatter.pdf \
       ./output/ped/true_r/heatmap_pp_qq.pdf
