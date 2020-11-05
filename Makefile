@@ -204,7 +204,8 @@ pedsimplots = ./output/ped/simplots/diff_100_80.pdf \
               ./output/ped/simplots/diff_100_99.pdf \
               ./output/ped/simplots/diff_50_51.pdf \
               ./output/ped/simplots/diff_50_60.pdf \
-              ./output/ped/simplots/diff_50_70.pdf
+              ./output/ped/simplots/diff_50_70.pdf \
+              ./output/ped/simplots/true_r2_box.pdf
 
 
 all : mle ngsLD uit mca norm comp ddiff ped

@@ -76,3 +76,50 @@ for (index in seq_len(nrow(snpcomparedf))) {
          width = 7,
          family = "Times")
 }
+
+
+###################
+## Plots of True R2
+###################
+
+simdf %>%
+  select(pref_pair, quadprop, starts_with("true_")) %>%
+  pivot_longer(cols = starts_with("true_"), names_to = c("snp1_snp2"), values_to = "ld") %>%
+  mutate(snp1_snp2 = str_remove(snp1_snp2, "^true_")) %>%
+  separate(snp1_snp2, into = c("snp1", "snp2")) %>%
+  mutate(snp1 = parse_number(snp1),
+         snp2 = parse_number(snp2),
+         snps = paste0("(", snp1, ",", snp2, ")"),
+         quadprop = case_when(near(quadprop, 0) ~ "0",
+                              near(quadprop, 1/3) ~ "1/3",
+                              near(quadprop, 2/3) ~ "2/3"),
+         pref_pair = case_when(near(pref_pair, 0) ~ "1/3",
+                               near(pref_pair, 0.5) ~ "2/3",
+                               near(pref_pair, 1) ~ "1"),
+         quadprop = parse_factor(quadprop, levels = c("0", "1/3", "2/3")),
+         pref_pair = parse_factor(pref_pair, levels = c("1/3", "2/3", "1"))) %>%
+  filter((snp1 == 50 & snp2 == 51) |
+           (snp1 == 50 & snp2 == 60) |
+           (snp1 == 50 & snp2 == 70) |
+           (snp1 == 100 & snp2 == 80) |
+           (snp1 == 100 & snp2 == 90) |
+           (snp1 == 100 & snp2 == 99)) ->
+  truelong
+
+truelong %>%
+  ggplot(aes(x = snps, y = ld)) +
+  geom_boxplot() +
+  facet_grid(pref_pair ~ quadprop) +
+  theme_bw() +
+  theme(strip.background = element_rect(fill = "white"),
+        axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  xlab("SNP Pairs") +
+  ylab(expression(paste(textstyle(True), ~~rho^2))) +
+  ylim(0, 1) ->
+  pl
+
+ggsave(filename = "./output/ped/simplots/true_r2_box.pdf",
+       plot = pl,
+       height = 6.5,
+       width = 7,
+       family = "Times")
