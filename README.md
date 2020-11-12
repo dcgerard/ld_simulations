@@ -3,7 +3,7 @@
 
 # Reproduce the Results of Gerard (2020)
 
-\<[doi:10.6084/m9.figshare.12765803.v1](https://doi.org/10.6084/m9.figshare.12765803.v1)\>
+\<[doi:10.6084/m9.figshare.12765803](https://doi.org/10.6084/m9.figshare.12765803)\>
 
 ## Introduction
 
@@ -23,11 +23,13 @@ If you find a bug, please create an
 
 You will need to have R and GNU Make installed to run these simulations.
 There are other dependencies for
-[ngsLD](https://github.com/fgvieira/ngsLD) and some of the R packages I
-used. Check their documentation if you are having trouble installing
-them.
+[ngsLD](https://github.com/fgvieira/ngsLD),
+[PedigreeSim](https://github.com/PBR/pedigreeSim), and some of the R
+packages I used. Check their documentation if you are having trouble
+installing them.
 
-Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
+Note that I have only tried these out on R version 4.0.3 (2020-10-10)
+using Ubuntu 20.04.
 
 1.  Install the appropriate R packages
     
@@ -130,14 +132,17 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
         (2013).
       - `make mca`: Real-data analysis using the data from McAllister
         and Miller (2016).
+      - `make ped`: Simulations under *interpretable* violations from
+        HWE, where data were simulated using
+        [PedigreeSim](https://github.com/PBR/pedigreeSim) (Voorrips and
+        Maliepaard 2012).
 
 7.  Get coffee/sweets. Running `make sims` should take a few hours. You
     should get some coffee\! Here is a list of some of my favorite
     places:
     
       - Washington, DC
-          - [Colony
-            Club](https://www.yelp.com/biz/colony-club-washington)
+          - [Doubles](https://www.yelp.com/biz/doubles-washington)
           - [Little Red
             Fox](https://www.yelp.com/biz/little-red-fox-washington)
           - [Three
@@ -161,7 +166,7 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
 
 # Session Information
 
-    #> R version 4.0.2 (2020-06-22)
+    #> R version 4.0.3 (2020-10-10)
     #> Platform: x86_64-pc-linux-gnu (64-bit)
     #> Running under: Ubuntu 20.04.1 LTS
     #> 
@@ -182,59 +187,59 @@ Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
     #> [8] methods   base     
     #> 
     #> other attached packages:
-    #>  [1] ldsep_1.0.0                 updog_2.0.2                
-    #>  [3] VariantAnnotation_1.34.0    Rsamtools_2.4.0            
-    #>  [5] Biostrings_2.56.0           XVector_0.28.0             
-    #>  [7] SummarizedExperiment_1.18.2 DelayedArray_0.14.1        
-    #>  [9] matrixStats_0.56.0          Biobase_2.48.0             
-    #> [11] GenomicRanges_1.40.0        GenomeInfoDb_1.24.2        
-    #> [13] IRanges_2.22.2              S4Vectors_0.26.1           
-    #> [15] BiocGenerics_0.34.0         vcfR_1.11.0                
-    #> [17] devtools_2.3.1              usethis_1.6.1              
-    #> [19] corrplot_0.84               doParallel_1.0.15          
-    #> [21] iterators_1.0.12            foreach_1.5.0              
-    #> [23] RcppArmadillo_0.9.900.2.0   Rcpp_1.0.5                 
+    #>  [1] ldsep_1.1.0                 updog_2.0.2                
+    #>  [3] VariantAnnotation_1.36.0    Rsamtools_2.6.0            
+    #>  [5] Biostrings_2.58.0           XVector_0.30.0             
+    #>  [7] SummarizedExperiment_1.20.0 Biobase_2.50.0             
+    #>  [9] GenomicRanges_1.42.0        GenomeInfoDb_1.26.0        
+    #> [11] IRanges_2.24.0              S4Vectors_0.28.0           
+    #> [13] MatrixGenerics_1.2.0        matrixStats_0.57.0         
+    #> [15] BiocGenerics_0.36.0         vcfR_1.12.0                
+    #> [17] devtools_2.3.2              usethis_1.6.3              
+    #> [19] corrplot_0.84               doParallel_1.0.16          
+    #> [21] iterators_1.0.13            foreach_1.5.1              
+    #> [23] RcppArmadillo_0.10.1.0.0    Rcpp_1.0.5                 
     #> [25] latex2exp_0.4.0             gridExtra_2.3              
     #> [27] ggthemes_4.2.0              forcats_0.5.0              
-    #> [29] stringr_1.4.0               dplyr_1.0.1                
-    #> [31] purrr_0.3.4                 readr_1.3.1                
-    #> [33] tidyr_1.1.1                 tibble_3.0.3               
+    #> [29] stringr_1.4.0               dplyr_1.0.2                
+    #> [31] purrr_0.3.4                 readr_1.4.0                
+    #> [33] tidyr_1.1.2                 tibble_3.0.4               
     #> [35] ggplot2_3.3.2               tidyverse_1.3.0            
     #> [37] BiocManager_1.30.10        
     #> 
     #> loaded via a namespace (and not attached):
-    #>  [1] colorspace_1.4-1         ellipsis_0.3.1           rprojroot_1.3-2         
-    #>  [4] fs_1.5.0                 rstudioapi_0.11          remotes_2.2.0           
-    #>  [7] bit64_4.0.2              AnnotationDbi_1.50.3     fansi_0.4.1             
-    #> [10] lubridate_1.7.9          xml2_1.3.2               codetools_0.2-16        
-    #> [13] splines_4.0.2            knitr_1.29               pkgload_1.1.0           
-    #> [16] jsonlite_1.7.0           broom_0.7.0              cluster_2.1.0           
-    #> [19] dbplyr_1.4.4             compiler_4.0.2           httr_1.4.2              
-    #> [22] backports_1.1.8          assertthat_0.2.1         Matrix_1.2-18           
-    #> [25] cli_2.0.2                htmltools_0.5.0          prettyunits_1.1.1       
-    #> [28] tools_4.0.2              gtable_0.3.0             glue_1.4.1              
-    #> [31] GenomeInfoDbData_1.2.3   rappdirs_0.3.1           cellranger_1.1.0        
-    #> [34] vctrs_0.3.2              ape_5.4                  nlme_3.1-147            
-    #> [37] rtracklayer_1.48.0       pinfsc50_1.2.0           xfun_0.16               
-    #> [40] ps_1.3.3                 testthat_2.3.2           rvest_0.3.6             
-    #> [43] lifecycle_0.2.0          XML_3.99-0.5             MASS_7.3-51.6           
-    #> [46] zlibbioc_1.34.0          scales_1.1.1             BSgenome_1.56.0         
-    #> [49] hms_0.5.3                curl_4.3                 yaml_2.2.1              
-    #> [52] memoise_1.1.0            biomaRt_2.44.1           RSQLite_2.2.0           
-    #> [55] stringi_1.4.6            desc_1.2.0               permute_0.9-5           
-    #> [58] GenomicFeatures_1.40.1   BiocParallel_1.22.0      pkgbuild_1.1.0          
-    #> [61] rlang_0.4.7              pkgconfig_2.0.3          bitops_1.0-6            
-    #> [64] evaluate_0.14            lattice_0.20-41          GenomicAlignments_1.24.0
-    #> [67] bit_4.0.3                processx_3.4.3           tidyselect_1.1.0        
-    #> [70] magrittr_1.5             R6_2.4.1                 generics_0.0.2          
-    #> [73] DBI_1.1.0                pillar_1.4.6             haven_2.3.1             
-    #> [76] withr_2.2.0              mgcv_1.8-31              RCurl_1.98-1.2          
-    #> [79] modelr_0.1.8             crayon_1.3.4             BiocFileCache_1.12.0    
-    #> [82] rmarkdown_2.3            progress_1.2.2           grid_4.0.2              
-    #> [85] readxl_1.3.1             blob_1.2.1               callr_3.4.3             
-    #> [88] vegan_2.5-6              reprex_0.3.0             digest_0.6.25           
-    #> [91] openssl_1.4.2            munsell_0.5.0            viridisLite_0.3.0       
-    #> [94] askpass_1.1              sessioninfo_1.1.1
+    #>  [1] readxl_1.3.1             backports_1.2.0          BiocFileCache_1.14.0    
+    #>  [4] splines_4.0.3            BiocParallel_1.24.1      digest_0.6.27           
+    #>  [7] htmltools_0.5.0          fansi_0.4.1              magrittr_1.5            
+    #> [10] memoise_1.1.0            BSgenome_1.58.0          cluster_2.1.0           
+    #> [13] remotes_2.2.0            modelr_0.1.8             askpass_1.1             
+    #> [16] prettyunits_1.1.1        colorspace_1.4-1         blob_1.2.1              
+    #> [19] rvest_0.3.6              rappdirs_0.3.1           haven_2.3.1             
+    #> [22] xfun_0.19                callr_3.5.1              crayon_1.3.4            
+    #> [25] RCurl_1.98-1.2           jsonlite_1.7.1           ape_5.4-1               
+    #> [28] glue_1.4.2               gtable_0.3.0             zlibbioc_1.36.0         
+    #> [31] DelayedArray_0.16.0      pkgbuild_1.1.0           scales_1.1.1            
+    #> [34] DBI_1.1.0                viridisLite_0.3.0        progress_1.2.2          
+    #> [37] bit_4.0.4                httr_1.4.2               ellipsis_0.3.1          
+    #> [40] pkgconfig_2.0.3          XML_3.99-0.5             dbplyr_2.0.0            
+    #> [43] tidyselect_1.1.0         rlang_0.4.8              AnnotationDbi_1.52.0    
+    #> [46] munsell_0.5.0            cellranger_1.1.0         tools_4.0.3             
+    #> [49] cli_2.1.0                generics_0.1.0           RSQLite_2.2.1           
+    #> [52] broom_0.7.2              evaluate_0.14            yaml_2.2.1              
+    #> [55] processx_3.4.4           knitr_1.30               bit64_4.0.5             
+    #> [58] fs_1.5.0                 nlme_3.1-150             xml2_1.3.2              
+    #> [61] biomaRt_2.46.0           compiler_4.0.3           rstudioapi_0.11         
+    #> [64] curl_4.3                 testthat_3.0.0           reprex_0.3.0            
+    #> [67] stringi_1.5.3            ps_1.4.0                 GenomicFeatures_1.42.0  
+    #> [70] desc_1.2.0               lattice_0.20-41          Matrix_1.2-18           
+    #> [73] vegan_2.5-6              permute_0.9-5            vctrs_0.3.4             
+    #> [76] pillar_1.4.6             lifecycle_0.2.0          bitops_1.0-6            
+    #> [79] rtracklayer_1.50.0       R6_2.5.0                 sessioninfo_1.1.1       
+    #> [82] codetools_0.2-18         MASS_7.3-53              assertthat_0.2.1        
+    #> [85] pkgload_1.1.0            openssl_1.4.3            rprojroot_1.3-2         
+    #> [88] withr_2.3.0              pinfsc50_1.2.0           GenomicAlignments_1.26.0
+    #> [91] GenomeInfoDbData_1.2.4   mgcv_1.8-33              hms_0.5.3               
+    #> [94] grid_4.0.3               rmarkdown_2.5            lubridate_1.7.9
 
 ## References
 
@@ -272,6 +277,15 @@ Uitdewilligen, Anne-Marie A. AND D’hoop, Jan G. A. M. L. AND Wolters.
 2013. “A Next-Generation Sequencing Method for Genotyping-by-Sequencing
 of Highly Heterozygous Autotetraploid Potato.” *PLOS ONE* 8 (5): 1–14.
 <https://doi.org/10.1371/journal.pone.0062355>.
+
+</div>
+
+<div id="ref-voorrips2012simulation">
+
+Voorrips, Roeland E., and Chris A. Maliepaard. 2012. “The Simulation of
+Meiosis in Diploid and Tetraploid Organisms Using Various Genetic
+Models.” *BMC Bioinformatics* 13 (1): 248.
+<https://doi.org/10.1186/1471-2105-13-248>.
 
 </div>
 

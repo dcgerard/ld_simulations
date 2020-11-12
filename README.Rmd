@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 # Reproduce the Results of @gerard2020pairwise
 
-<[doi:10.6084/m9.figshare.12765803.v1](https://doi.org/10.6084/m9.figshare.12765803.v1)>
+<[doi:10.6084/m9.figshare.12765803](https://doi.org/10.6084/m9.figshare.12765803)>
 
 ## Introduction
 
@@ -29,9 +29,9 @@ If you find a bug, please create an
 
 ## Instructions
 
-You will need to have R and GNU Make installed to run these simulations. There are other dependencies for [ngsLD](https://github.com/fgvieira/ngsLD) and some of the R packages I used. Check their documentation if you are having trouble installing them.
+You will need to have R and GNU Make installed to run these simulations. There are other dependencies for [ngsLD](https://github.com/fgvieira/ngsLD), [PedigreeSim](https://github.com/PBR/pedigreeSim), and some of the R packages I used. Check their documentation if you are having trouble installing them.
 
-Note that I have only tried these out on R 4.0.2 using Ubuntu 20.04.
+Note that I have only tried these out on `r version$version.string` using Ubuntu 20.04.
     
 1. Install the appropriate R packages
     ```{r, eval = FALSE}
@@ -132,11 +132,12 @@ lapply(pkgvec, require, character.only = TRUE)
     - `make ngsLD`: Verifying that [`ldsep`](https://cran.r-project.org/package=ldsep) and [`ngsLD`](https://github.com/fgvieira/ngsLD) [@fox2019ngsld] provide the same results in diploids.
     - `make uit`: Real-data analysis using the data from @uitdewilligen2013next.
     - `make mca`: Real-data analysis using the data from @mcallister2016single.
+    - `make ped`: Simulations under *interpretable* violations from HWE, where data were simulated using [PedigreeSim](https://github.com/PBR/pedigreeSim) [@voorrips2012simulation].
 
 7. Get coffee/sweets. Running `make sims` should take a few hours. You should get some coffee! Here is a list of some of my favorite places:
 
     - Washington, DC
-        - [Colony Club](https://www.yelp.com/biz/colony-club-washington)
+        - [Doubles](https://www.yelp.com/biz/doubles-washington)
         - [Little Red Fox](https://www.yelp.com/biz/little-red-fox-washington)
         - [Three Fifty](https://www.yelp.com/biz/three-fifty-bakery-and-coffee-bar-washington) (for the baked goods, coffee is meh)
     - Chicago
