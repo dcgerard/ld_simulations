@@ -29,7 +29,7 @@ packages I used. Check their documentation if you are having trouble
 installing them.
 
 Note that I have only tried these out on R version 4.0.3 (2020-10-10)
-using Ubuntu 20.04.
+running Ubuntu 20.04.1 LTS.
 
 1.  Install the appropriate R packages
     

@@ -31,7 +31,7 @@ If you find a bug, please create an
 
 You will need to have R and GNU Make installed to run these simulations. There are other dependencies for [ngsLD](https://github.com/fgvieira/ngsLD), [PedigreeSim](https://github.com/PBR/pedigreeSim), and some of the R packages I used. Check their documentation if you are having trouble installing them.
 
-Note that I have only tried these out on `r version$version.string` using Ubuntu 20.04.
+Note that I have only tried these out on `r version$version.string` running `r sessionInfo()$running`.
     
 1. Install the appropriate R packages
     ```{r, eval = FALSE}
