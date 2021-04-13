@@ -187,7 +187,7 @@ running Ubuntu 20.04.2 LTS.
     #> [8] methods   base     
     #> 
     #> other attached packages:
-    #>  [1] ldsep_2.0.2                 updog_2.1.0                
+    #>  [1] ldsep_2.0.3                 updog_2.1.0                
     #>  [3] VariantAnnotation_1.36.0    Rsamtools_2.6.0            
     #>  [5] Biostrings_2.58.0           XVector_0.30.0             
     #>  [7] SummarizedExperiment_1.20.0 Biobase_2.50.0             
